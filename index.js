@@ -1,5 +1,6 @@
 const path = require('path')
 const mongoose = require('mongoose')
+const ejsEngineMate = require('ejs-mate')
 const express = require('express')
 const app = express()
 
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'public')))
 
 //ejs template set up
+app.engine('ejs', ejsEngineMate)
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
@@ -22,6 +24,7 @@ mongoose.connect('mongodb://localhost:27017/yaqeen-halal-food-db', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
+
 
 mongoose.connection.on('error', console.error.bind(console, 'connection error: '))
 mongoose.connection.once('open', () => {
