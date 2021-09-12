@@ -16,6 +16,18 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
+//mongoode connection to MongoDB
+
+mongoose.connect('mongodb://localhost:27017/yaqeen-halal-food-db', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
+
+mongoose.connection.on('error', console.error.bind(console, 'connection error: '))
+mongoose.connection.once('open', () => {
+    console.log('Database connected')
+})
+
 app.use('/', router)
 
 app.listen(PORT, () => {
