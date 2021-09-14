@@ -1,0 +1,7 @@
+@media(max-width: 767px) {
+    .col-6,
+    .col-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}

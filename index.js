@@ -7,16 +7,18 @@ const app = express()
 const router = require('./routes/routes')
 const PORT = process.env.PORT || 3000
 
-//express body parser
-app.use(express.urlencoded({ extended: true }))
+
+
+//ejs template set up
+app.engine('ejs', ejsEngineMate)
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'views'))
 
 //directory for serving static files
 app.use(express.static(path.join(__dirname, 'public')))
 
-//ejs template set up
-app.engine('ejs', ejsEngineMate)
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'ejs')
+//express body parser
+app.use(express.urlencoded({ extended: true }))
 
 //mongoode connection to MongoDB
 
