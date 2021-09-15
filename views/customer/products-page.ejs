@@ -1,68 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout('layouts/customer-boilerplate')  -%>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yaqeen-Halal-Food</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-</head>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
 
-<body class="vh-100">
-    <%- include('navbar')  %>
-
-        <div class="container">
-            <div class="row row-cols-1 row-cols-md-2 g-4">
-
-                <div class="col">
-                    <a href="/fruits">
-                        <div class="card" style="cursor: pointer;">
-                            <img src="img/fruits.jpg" class="card-img-top" alt="...">
-                            <div class="card-body card-img-overlay">
-                                <h5 class="card-title" style="color: aliceblue;">Browse fruits</h5>
-                            </div>
+            <div class="col">
+                <a href="/products/fruits">
+                    <div class="card" style="cursor: pointer;">
+                        <img src="img/fruits.jpg" class="card-img-top" alt="...">
+                        <div class="card-body card-img-overlay">
+                            <h5 class="card-title" style="color: aliceblue;">Browse fruits</h5>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                </a>
+            </div>
 
-                <div class="col">
-                    <a href="vegetables">
-                        <div class="card" style="cursor: pointer;">
-                            <img src="img/vegetables.jpg" class="card-img-top" alt="...">
-                            <div class="card-body card-img-overlay">
-                                <h5 class="card-title" style="color: aliceblue;">Browse vegetables</h5>
-                            </div>
+            <div class="col">
+                <a href="/products/vegetables">
+                    <div class="card" style="cursor: pointer;">
+                        <img src="img/vegetables.jpg" class="card-img-top" alt="...">
+                        <div class="card-body card-img-overlay">
+                            <h5 class="card-title" style="color: aliceblue;">Browse vegetables</h5>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                </a>
+            </div>
 
-                <div class="col">
-                    <a href="/meat">
-                        <div class="card" style="cursor: pointer;">
-                            <img src="img/meat.jpg" class="card-img-top" alt="...">
-                            <div class="card-body card-img-overlay">
-                                <h5 class="card-title" style="color: aliceblue;">Browse meat</h5>
-                            </div>
+            <div class="col">
+                <a href="/products/meat">
+                    <div class="card" style="cursor: pointer;">
+                        <img src="img/meat.jpg" class="card-img-top" alt="...">
+                        <div class="card-body card-img-overlay">
+                            <h5 class="card-title" style="color: aliceblue;">Browse meat</h5>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                </a>
+            </div>
 
-                <div class="col">
-                    <a href="/spices">
-                        <div class="card" style="cursor: pointer;">
-                            <img src="img/spices.jpg" class="card-img-top" alt="...">
-                            <div class="card-body card-img-overlay">
-                                <h5 class="card-title" style="color: aliceblue;">Browse spices</h5>
-                            </div>
+            <div class="col">
+                <a href="/products/spices">
+                    <div class="card" style="cursor: pointer;">
+                        <img src="img/spices.jpg" class="card-img-top" alt="...">
+                        <div class="card-body card-img-overlay">
+                            <h5 class="card-title" style="color: aliceblue;">Browse spices</h5>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                </a>
             </div>
         </div>
-
-
-        <script src="js/bootstrap.js"></script>
-</body>
-
-</html>
+    </div>

@@ -2,12 +2,8 @@ const Product = require('../model/productModel')
 const express = require('express');
 const router = express.Router()
 
-
 router.get('/', (req, res) => {
-    res.render('customer/products-page')
-});
-router.get('/products', (req, res) => {
-    res.render('customer/products-page')
+    res.render('customer/products-page', { what: "Products" })
 });
 router.get('/fruits', async(req, res) => {
     const fruits = await Product.find({ category: "fruits" })
@@ -28,9 +24,7 @@ router.get('/meat', async(req, res) => {
     const meat = await Product.find({ category: "meat" })
     res.render('customer/poroducts-by-category', { products: meat, what: "Meat Products" })
 });
-router.get('/myaccount', (req, res) => {
-    res.render('customer/user-account', { what: "MyAccount" })
-})
+
 
 router.get('/:id', async(req, res) => {
     const { id } = req.params
