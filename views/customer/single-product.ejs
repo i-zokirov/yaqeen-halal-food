@@ -4,20 +4,27 @@
             <div class="card">
                 <img src="https://source.unsplash.com/MvCde9kgov8" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">
-                        <%= product.name %>
-                    </h5>
-                    <p class="card-text">
-                        <%= product.description %>
-                    </p>
+                    <% if (product.tags.includes('OnSale')) {%>
+                        <span style="float: left; margin-right: 10px" class="badge bg-warning">OnSale</span>
+                        <% } %>
+                            <h5 class="card-title" style="text-transform: capitalize;">
+                                <%= product.name %>
+                            </h5>
+                            <p class="card-text">
+                                <%= product.description %>
+                            </p>
+
                 </div>
 
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        <%= product.price %> zl
+                        <%= product.price %> zl per
+                            <%= product.quantity_type %>
                     </li>
                     <li class="list-group-item">
-                        <%= product.quantity %> stock
+                        Available in stock:
+                        <%= product.quantity %>
+                            <%= product.quantity_type %>
                     </li>
                 </ul>
 

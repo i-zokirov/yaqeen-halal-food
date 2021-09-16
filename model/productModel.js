@@ -25,10 +25,18 @@ const productSchema = new Schema({
         required: true,
         min: 0
     },
+    quantity_type: {
+        type: String,
+        required: true,
+        enum: ['kg', 'piece']
+    },
     image: {
         type: String
     },
-
+    tags: {
+        type: Array,
+        default: ["Available"]
+    },
     created_date: {
         type: Date,
         default: Date.now

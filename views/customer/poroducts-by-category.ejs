@@ -4,14 +4,26 @@
             <% for(product of products) {%>
                 <div class="col mb-3">
                     <div class="card" style="cursor: pointer;">
-                        <img src="https://source.unsplash.com/MvCde9kgov8" class="card-img-top" alt="...">
+                        <img src="https://3.imimg.com/data3/QB/EW/MY-1778575/vegetable-items-500x500.jpg" class="card-img-top" alt="...">
+                        <div class="card-body card-img-overlay">
+                            <% if (product.tags.includes('OnSale')) {%>
+                                <span class="badge bg-warning">OnSale</span>
+                                <br>
+                                <% } %>
+                                    <div class="btn btn-primary btn-sm">
+                                        <a href="/products/<%= product._id %>" style="text-decoration: none; color:aliceblue; text-transform: capitalize;">
+                                            <%= product.name %>
+                                        </a>
+                                    </div>
+                        </div>
                         <div class="card-body">
                             <h5 class="card-title">
-                                <a href="/products/<%= product._id %>" style="text-decoration: none;">
-                                    <%= product.name %>
-                                </a> -
-                                <%= product.price %> zl</p>
+                                <%= product.price %> zl per
+                                    <%= product.quantity_type %>
                             </h5>
+                            <div class="d-flex" style="margin-left: auto;">
+                                <button class="btn btn-secondary btn-sm">Add</button>
+                            </div>
 
                         </div>
                     </div>

@@ -33,6 +33,7 @@ const seedDB = async() => {
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             price: price,
             quantity: quantity,
+            quantity_type: "kg"
         })
         await product.save()
     }
@@ -46,6 +47,7 @@ const seedDB = async() => {
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             price: price,
             quantity: quantity,
+            quantity_type: "kg"
         })
         await product.save()
     }
@@ -58,6 +60,7 @@ const seedDB = async() => {
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             price: price,
             quantity: quantity,
+            quantity_type: "piece"
         })
         await product.save()
     }
@@ -70,6 +73,7 @@ const seedDB = async() => {
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             price: price,
             quantity: quantity,
+            quantity_type: "kg"
         })
         await product.save()
     }
