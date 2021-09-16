@@ -1,0 +1,50 @@
+<% layout('layouts/customer-boilerplate')  -%>
+
+
+    <div class="row ">
+        <div class="col-md-8 offset-md-4 col-xl-6 offset-xl-3">
+            <div class="card shadow">
+                <!-- <img src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="" class="card-img-top" /> -->
+                <div class="card-body">
+                    <h5 class="card-title">Edit Profile data</h5>
+                    <form action="/user/myaccount/edit" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label" for="first_name">First Name: </label>
+                            <input class="form-control" type="text" value="<%= currentUser.first_name%>" id="first_name" name="first_name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="last_name">Last Name: </label>
+                            <input class="form-control" type="text" value="<%= currentUser.last_name%>" id="last_name" name="last_name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="username">Username: </label>
+                            <input class="form-control" type="text" value="<%= currentUser.username%>" id="username" name="username" required disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="email">Email: </label>
+                            <input class="form-control" type="email" value="<%= currentUser.email_address%>" id="email" name="email_address" required disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="phone_number">Phone number: </label>
+                            <input class="form-control" type="text" value="<%= currentUser.phone_number%>" id="phone_number" name="phone_number">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="address">Address: </label>
+                            <input class="form-control" type="text" <% if (currentUser.address) {%> value="
+                            <%= currentUser.address%>"
+                                <% } else { %>
+                                    placeholder="St name House No/Apartment No, Postal code, City"
+                                    <% } %>
+                                        id="address" name="address">
+                        </div>
+
+                        <div style="align-items: center;">
+                            <button class="btn btn-primary btn-block ">Save</button>
+                            <a href="/user/myaccount" class="btn btn-info btn-block" role="button">Back</a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

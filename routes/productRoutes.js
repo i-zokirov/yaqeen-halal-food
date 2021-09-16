@@ -1,7 +1,8 @@
 const Product = require('../model/productModel')
 const express = require('express');
 const router = express.Router()
-
+    //external middleware functions
+const { isLoggedIn } = require('../middleware')
 router.get('/', (req, res) => {
     res.render('customer/products-page', { what: "Products" })
 });

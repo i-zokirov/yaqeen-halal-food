@@ -5,11 +5,32 @@
             <div class="card">
                 <img src="https://www.seekpng.com/png/detail/514-5147412_default-avatar-icon.png" alt="">
                 <div class="card-body text-center">
-                    <h5>John Doe</h5>
+                    <h5>
+                        <% if (currentUser.first_name && currentUser.last_name )  {%>
+                            <%= currentUser.first_name %>
+                                <%= currentUser.last_name %>
+                                    <% } else {%>
+                                        <%= currentUser.username  %>
+                                            <% } %>
+                    </h5>
+
+                    <p>
+                        <% if(currentUser.first_name != "" && currentUser.last_name != "") {%>
+                            Username:
+                            <%= currentUser.username  %>
+                                <% } %>
+                    </p>
                 </div>
                 <div class="card-body">
-                    <a href="/myaccount" class="btn btn-warning">Edit Account Data</a>
-                    <a href="/myaccount" class="btn btn-danger">Edit Payment Data</a>
+                    <a href="/user/myaccount/edit" class="btn btn-warning">
+                        <% if (currentUser.first_name == "" || currentUser.last_name == "" || currentUser.last_name == "" ||
+                        currentUser.address == "" || currentUser.phone_number == null) {%>
+                            Edit Profile data
+                            <% } else { %>
+                                Edit Profile data
+                                <% } %>
+                    </a>
+                    <a href="/user/myaccount" class="btn btn-danger">Edit Payment data</a>
                 </div>
             </div>
         </div>
@@ -19,23 +40,47 @@
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                            First name: <span>John</span>
+                            First name: <span><%= currentUser.first_name %></span>
                         </li>
                         <li class="list-group-item">
-                            Last name: <span>Doe</span>
+                            Last name: <span><%= currentUser.last_name %></span>
                         </li>
                         <li class="list-group-item">
-                            Address: <span>Mikolowska 17/3, 40-076, Katowice, Poland</span>
+                            Address: <span><%= currentUser.address %></span>
                         </li>
                         <li class="list-group-item">
-                            Phone number: <span>+48 777 777 777</span>
+                            Phone number: <span><%= currentUser.phone_number %></span>
                         </li>
                         <li class="list-group-item">
-                            Email address: <span>john.doe@email.com</span>
+                            Email address: <span><%= currentUser.email_address %></span>
                         </li>
                     </ul>
                 </div>
-
             </div>
+
+            <div style="padding: 10px;">
+                <h4>Order history: </h4>
+            </div>
+            <div class="col-6 mb-5" style="width: 100%;">
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          Order name
+                        </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <p>View <a href="#">Ordername</a></p>
+                                <p>Purchased on: <strong>00.00.0000</strong> </p>
+                                <p>Price: <strong>00.00 zl</strong></p>
+                                <p>Payment Status: <strong>Paid</strong></p>
+                                <p>Delivery Status: <strong>Delivered</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>

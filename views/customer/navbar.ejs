@@ -19,25 +19,32 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contact</a>
                 </li>
+
             </ul>
-            <div class="d-flex">
-                <div style="padding-right: 5px;">
-                    <a href="/user/login" class="btn btn-secondary my-2 my-sm-0" role="button">Sign In</a>
+            <ul class="navbar-nav" id="shopping-card">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" style="color: aliceblue;"><i class="fas fa-shopping-cart"></i></a>
+                </li>
+            </ul>
+            <% if(!currentUser) {%>
+                <div class="d-flex">
+                    <div style="padding-right: 5px;">
+                        <a href="/user/login" class="btn btn-secondary my-2 my-sm-0" role="button">Sign In</a>
+                    </div>
+                    <div>
+                        <a href="/user/register" class="btn btn-warning my-2 my-sm-0" role="button">Sign Up</a>
+                    </div>
                 </div>
-                <div>
-                    <a href="/user/register" class="btn btn-warning my-2 my-sm-0" role="button">Sign Up</a>
-                </div>
-            </div>
-
-            <form class="d-flex" method="POST" action="/user/logout">
-                <div style="padding-right: 5px;">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Sign Out</button>
-                </div>
-                <div>
-                    <a href="/user/myaccount" class="btn btn-info my-2 my-sm-0" role="button">MyAccount</a>
-                </div>
-            </form>
-
+                <% } else { %>
+                    <form class="d-flex" method="GET" action="/user/logout">
+                        <div style="padding-right: 5px;">
+                            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Sign Out</button>
+                        </div>
+                        <div>
+                            <a href="/user/myaccount" class="btn btn-info my-2 my-sm-0" role="button">MyAccount</a>
+                        </div>
+                    </form>
+                    <% } %>
         </div>
     </div>
 </nav>
