@@ -35,6 +35,7 @@ router.post('/register', async(req, res) => {
         const registeredUser = await User.register(newUser, password)
         req.login(registeredUser, err => {
             if (err) return next(err)
+            console.log("New user registered", registeredUser)
             req.flash('success', 'Welcome to Yaqeen-Halal-Food!')
             res.redirect('/user/myaccount')
         });

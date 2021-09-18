@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const ejsEngineMate = require('ejs-mate')
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
+const ExpressError = require('./utils/expressError')
 const express = require('express')
 const session = require('express-session')
 const flash = require('connect-flash');
@@ -78,6 +79,18 @@ app.get('/', (req, res) => {
 
 app.use('/products', productsRouter)
 app.use('/user', userRouter)
+
+app.get('*', (req, res, next) => {
+    next(new ExpressError('Page not found', 404))
+})
+
+//error handler
+app.use((err, req, res, next) => {
+    const { statuscode = 500, message } = err
+    if (!err.message) err.message = "Something went wrong!"
+    res.status(statuscode).render('layouts/error-template', { what: "Error", err })
+
+})
 
 app.listen(PORT, () => {
     console.log(`Your app is running on port ${PORT}`)
