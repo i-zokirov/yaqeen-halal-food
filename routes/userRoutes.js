@@ -4,7 +4,7 @@ const router = express.Router()
 const passport = require('passport')
 
 //external middleware functions
-const { isLoggedIn } = require('../middleware')
+const { isLoggedIn, validateUserData } = require('../middleware')
 
 
 router.get('/myaccount', isLoggedIn, (req, res) => {
@@ -28,7 +28,7 @@ router.get('/logout', (req, res) => {
     res.redirect('/')
 });
 
-router.post('/register', async(req, res) => {
+router.post('/register', validateUserData, async(req, res) => {
     try {
         const { email_address, username, password } = req.body
         const newUser = new User({ email_address, username })
@@ -53,7 +53,9 @@ router.post('/login', passport.authenticate('local', { failureFlash: true, failu
 });
 
 router.post('/myaccount/edit', isLoggedIn, async(req, res) => {
+
     try {
+        console.log(req.body)
         const { id } = req.user
         const user = await User.findByIdAndUpdate(id, {...req.body })
         await user.save()

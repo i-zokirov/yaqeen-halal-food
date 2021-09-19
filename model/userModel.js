@@ -2,6 +2,9 @@ const mongoose = require('mongoose')
 const passportLocalMongoose = require('passport-local-mongoose')
 const { Schema } = mongoose
 
+const addressSchema = new Schema({
+
+})
 const userAccountSchema = new Schema({
     first_name: {
         type: String,
@@ -16,15 +19,31 @@ const userAccountSchema = new Schema({
         required: true,
         unique: true
     },
-
     address: {
-        type: String,
-        default: ""
+        St_address: {
+            type: String,
+            default: ""
+        },
+        St_address2: {
+            type: String,
+            default: ""
+        },
+        city: {
+            type: String,
+            default: ""
+        },
+        postal_code: {
+            type: String,
+            default: ""
+        },
+        voivodship: {
+            type: String,
+            default: ""
+        }
     },
     phone_number: {
-        type: Number,
-        default: "",
-        min: 0
+        type: String,
+        default: ""
     },
     isAdmin: {
         type: Boolean,

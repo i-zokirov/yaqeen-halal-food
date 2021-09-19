@@ -46,7 +46,7 @@
                             Last name: <span><%= currentUser.last_name %></span>
                         </li>
                         <li class="list-group-item">
-                            Address: <span><%= currentUser.address %></span>
+                            Address: <span><%= currentUser.address.St_address %> <%= currentUser.address.St_address2 %>, <%= currentUser.address.postal_code %>, <%= currentUser.address.city %>, <%= currentUser.address.voivodship %></span>
                         </li>
                         <li class="list-group-item">
                             Phone number: <span><%= currentUser.phone_number %></span>

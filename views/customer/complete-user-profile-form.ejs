@@ -28,17 +28,53 @@
                             <label class="form-label" for="phone_number">Phone number: </label>
                             <input class="form-control" type="text" value="<%= currentUser.phone_number%>" id="phone_number" name="phone_number">
                         </div>
+
                         <div class="mb-3">
-                            <label class="form-label" for="address">Address: </label>
-                            <input class="form-control" type="text" <% if (currentUser.address) {%> value="
-                            <%= currentUser.address%>"
-                                <% } else { %>
-                                    placeholder="St name House No/Apartment No, Postal code, City"
-                                    <% } %>
-                                        id="address" name="address">
+                            <label for="address" class="form-label">Address: </label>
+                            <input type="text" class="form-control" id="address" name="address[St_address]" placeholder="Main St 123">
+                        </div>
+                        <div class="mb-3">
+                            <label for="address2" class="form-label">Address 2: </label>
+                            <input type="text" class="form-control" id="address2" name="address[St_address2]" placeholder="House, Apartment, floor">
                         </div>
 
-                        <div style="align-items: center;">
+                        <div class="mb-3 row g-3">
+                            <div class="col-md-8">
+                                <label for="city" class="form-label">City: </label>
+                                <input type="text" class="form-control" name="address[city]" id="city">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="postalcode" class="form-label">Postal code: </label>
+                                <input type="text" class="form-control" name="address[postal_code]" id="postalcode">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div>
+                                <label for="voivodship" class="form-label">Voivodship: </label>
+                                <select id="voivodship" name="address[voivodship]" class="form-select">
+                                  <option selected disabled>Choose...</option>
+                                  <option>Greater Poland</option>
+                                  <option>Kuyavia-Pomerania</option>
+                                  <option>Lesser Poland</option>
+                                  <option>Łódź</option>
+                                  <option>Lower Silesia</option>
+                                  <option>Lublin</option>
+                                  <option>Lubusz</option>
+                                  <option>Masovia</option>
+                                  <option>Opole</option>
+                                  <option>Podlaskie</option>
+                                  <option>Pomerania</option>
+                                  <option>Silesia</option>
+                                  <option>Subcarpathia</option>
+                                  <option>Holy Cross Province</option>
+                                  <option>Warmia-Masuria</option>
+                                  <option> West Pomerania</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="padding-top: 20px;">
                             <button class="btn btn-primary btn-block ">Save</button>
                             <a href="/user/myaccount" class="btn btn-info btn-block" role="button">Back</a>
                         </div>

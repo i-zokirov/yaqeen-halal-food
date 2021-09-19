@@ -84,6 +84,8 @@ app.get('*', (req, res, next) => {
     next(new ExpressError('Page not found', 404))
 })
 
+app.get('/fakeuser')
+
 //error handler
 app.use((err, req, res, next) => {
     const { statuscode = 500, message } = err
