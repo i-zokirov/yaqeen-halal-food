@@ -27,6 +27,12 @@
                             <%= product.quantity_type %>
                     </li>
                 </ul>
+                <div class="card-body">
+                    <a href="/products/<%= product._id %>/edit" class="btn btn-primary">Edit</a>
+                    <form class="d-inline" method="POST" action="/products/<%= product._id %>?_method=DELETE">
+                        <button class="btn btn-secondary">Delete</button>
+                    </form>
+                </div>
 
             </div>
         </div>

@@ -8,17 +8,17 @@
 
                 <div class="card-body">
                     <h5 class="card-title">Add product: </h5>
-                    <form action="/products/add" method="POST">
+                    <form action="/products/<%= product._id %>/edit?_method=PUT" method="POST">
 
                         <div class="mb-3">
                             <label class="form-label" for="name">Product name: </label>
-                            <input class="form-control" type="text" id="name" name="name" required autofocus>
+                            <input class="form-control" type="text" id="name" name="name" value="<%= product.name %>" required autofocus>
                         </div>
 
                         <div class="mb-3">
                             <label for="category" class="form-label mt-4">Select category: </label>
                             <select class="form-select" id="category" name="category" required>
-                                <option disabled selected>Select here</option>
+                                <option selected><%= product.category %></option>
                                 <option>fruits</option>
                                 <option>vegetables</option>
                                 <option>meat</option>
@@ -30,46 +30,53 @@
                             <label class="form-label" for="price">Price: </label>
                             <div class="input-group">
                                 <div class="input-group-text">zl</div>
-                                <input type="number" class="form-control" id="price" name="price" required>
+                                <input type="number" class="form-control" id="price" name="price" value="<%= product.price %>" required>
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" name="tags" value="Available" id="tags" checked>
-                                <label class="form-check-label" for="tags">Available</label>
+                                <input class="form-check-input" type="checkbox" name="tags" value="Available" id="tags" <% if(product.tags.includes( 'Available')) { %> checked
+                                <% } %> >
+                                    <label class="form-check-label" for="tags">Available</label>
                             </div>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" name="tags" value="OnSale" id="tags">
-                                <label class="form-check-label" for="tags">OnSale</label>
+                                <input class="form-check-input" type="checkbox" name="tags" value="OnSale" id="tags" <% if(product.tags.includes( 'OnSale')) { %> checked
+                                <% } %>>
+                                    <label class="form-check-label" for="tags">OnSale</label>
                             </div>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" name="tags" value="Out-of-Stock" id="tags">
-                                <label class="form-check-label" for="tags">Out-of-Stock</label>
+                                <input class="form-check-input" type="checkbox" name="tags" value="Out-of-Stock" id="tags" <% if(product.tags.includes( 'Out-of-Stock')) { %> checked
+                                <% } %>>
+                                    <label class="form-check-label" for="tags">Out-of-Stock</label>
                             </div>
                         </div>
 
 
                         <div class="mb-3">
                             <label class="form-label" for="quantity">Quantity: </label>
-                            <input class="form-control" type="number" id="quantity" name="quantity" required>
+                            <input class="form-control" type="number" id="quantity" name="quantity" value="<%= product.quantity %>" required>
 
                             <label for="quantity_type" class="form-label mt-4">Quantity type: </label>
                             <select class="form-select" id="quantity_type" name="quantity_type" required>
-                                <option disabled selected>Select here</option>
+                               <% if (product.quantity_type == 'kg') { %>
+                                <option selected>kg</option>
+                                <option>piece</option>  
+                               <% } else { %>
                                 <option>kg</option>
-                                <option>piece</option>                     
+                                <option selected>piece</option>  
+                                <% } %> 
+                                                   
                             </select>
                         </div>
-
                         <div class="mb-3">
                             <label for="description" class="form-label mt-4">Product description: </label>
-                            <textarea class="form-control" id="description" name="description" rows="2" required></textarea>
+                            <textarea class="form-control" id="description" name="description" rows="2" required><%= product.description %></textarea>
                         </div>
 
                         <div>
-                            <button class="btn btn-primary btn-block ">Submit</button>
-                            <a href="/products" class="btn btn-info btn-block" role="button">Back</a>
+                            <button class="btn btn-primary btn-block ">Save</button>
+                            <a href="/products/<%= product._id %>" class="btn btn-info btn-block" role="button">Back</a>
                         </div>
 
                     </form>

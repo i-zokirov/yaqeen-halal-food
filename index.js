@@ -4,6 +4,7 @@ const ejsEngineMate = require('ejs-mate')
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const ExpressError = require('./utils/expressError')
+const methodOverride = require('method-override')
 const express = require('express')
 const session = require('express-session')
 const flash = require('connect-flash');
@@ -71,6 +72,9 @@ app.use((req, res, next) => {
     res.locals.warning = req.flash('warning')
     next()
 })
+
+//overriding default methods with forms
+app.use(methodOverride('_method'))
 
 //routes
 app.get('/', (req, res) => {
