@@ -1,4 +1,4 @@
-const { userSchema } = require('./joi-schema')
+const { userSchema, productSchema } = require('./joi-schema')
 const ExpressError = require('./utils/expressError')
 
 
@@ -14,6 +14,16 @@ module.exports.isLoggedIn = (req, res, next) => {
 module.exports.validateUserData = (req, res, next) => {
     const { error } = userSchema.validate(req.body)
     if (error) {
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400)
+    } else {
+        next()
+    }
+}
+module.exports.validateProductData = (req, res, next) => {
+    const { error } = productSchema.validate(req.body)
+    if (error) {
+        console.log(error)
         const msg = error.details.map(el => el.message).join(',')
         throw new ExpressError(msg, 400)
     } else {

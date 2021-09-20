@@ -4,7 +4,7 @@ const router = express.Router();
 const catchAsyncErrors = require('../utils/catchAsyncErrors')
 
 //external middleware functions
-const { isLoggedIn } = require('../middleware')
+const { isLoggedIn, validateProductData } = require('../middleware')
 
 
 router.get('/', (req, res) => {
@@ -47,7 +47,7 @@ router.get('/:id', catchAsyncErrors(async(req, res) => {
     res.render('customer/single-product', { product: product, what: product.name })
 }));
 
-router.post('/add', async(req, res) => {
+router.post('/add', validateProductData, async(req, res) => {
     try {
         const { name, category, price, tags, quantity, quantity_type, description } = req.body
         const product = await new Product({ name, category, price, tags, quantity, quantity_type, description })
@@ -59,7 +59,9 @@ router.post('/add', async(req, res) => {
         req.flash('error', e.message)
         res.redirect('/products/add')
     }
-})
+});
+
+
 
 
 module.exports = router

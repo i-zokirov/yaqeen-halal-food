@@ -51,4 +51,14 @@ module.exports.userSchema = Joi.object({
         postal_code: Joi.string().alphanum().trim().min(3).max(10).escapeHTML(),
         voivodship: Joi.string().alphanum().trim().min(3).max(60).escapeHTML(),
     })
+});
+
+module.exports.productSchema = Joi.object({
+    name: Joi.string().alphanum().trim().min(3).max(40).escapeHTML().required(),
+    description: Joi.string().alphanum().trim().min(5).max(500).escapeHTML().required(),
+    category: Joi.string().alphanum().trim().min(3).max(40).escapeHTML().required(),
+    price: Joi.number().min(0).required(),
+    quantity: Joi.number().min(0).required(),
+    quantity_type: Joi.string().alphanum().trim().min(2).max(40).escapeHTML().required(),
+    tags: Joi.string().alphanum().trim().min(2).max(50).escapeHTML().required()
 })
