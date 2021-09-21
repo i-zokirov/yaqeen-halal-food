@@ -1,11 +1,13 @@
 const Product = require('../model/productModel')
+const ShoppingCart = require('../model/shoppingCartModel')
+const User = require('../model/userModel')
 const express = require('express');
 const router = express.Router();
 const catchAsyncErrors = require('../utils/catchAsyncErrors')
 
 //external middleware functions
 const { isLoggedIn, validateProductData } = require('../middleware');
-const { findByIdAndUpdate } = require('../model/productModel');
+
 
 
 router.get('/', (req, res) => {
@@ -41,6 +43,48 @@ router.get('/onsale', catchAsyncErrors(async(req, res) => {
     res.render('customer/poroducts-by-category', { products: productsOnSale, what: "Products on Sale" })
 }))
 
+router.get('/shopping-cart', isLoggedIn, catchAsyncErrors(async(req, res) => {
+    const { id } = req.user
+    const user = await User.findById(id).populate('shopping_cart')
+    if (user.shopping_cart) {
+        const shopping_cart = await (await ShoppingCart.findById(user.shopping_cart._id)).populate('cart_owner')
+
+        for (let index in shopping_cart.products) {
+            await shopping_cart.populate(`products.${index}.cart_item`)
+        }
+        console.log(shopping_cart)
+        res.render('customer/shoppingcart-template', { what: "MyCart", shopping_cart })
+    } else {
+        req.flash('info', 'You do not have any items in your cart. Add products to your cart to view them.')
+        res.redirect('/products')
+    }
+}));
+
+
+router.post('/shopping-cart/add', isLoggedIn, catchAsyncErrors(async(req, res) => {
+    const { productID, userID, quantity } = req.body
+    const user = await User.findById(userID)
+    const product = await Product.findById(productID)
+    if (user.shopping_cart) {
+        await user.populate('shopping_cart')
+        const existing_cart = await ShoppingCart.findById(user.shopping_cart._id)
+        existing_cart.products.push({ cart_item: product, item_quantity: quantity })
+        await existing_cart.save()
+    } else {
+        const new_shopping_cart = await new ShoppingCart({ products: [{ cart_item: productID, item_quantity: quantity }] })
+        new_shopping_cart.cart_owner = userID
+        await new_shopping_cart.save()
+        user.shopping_cart = new_shopping_cart._id
+        await user.save()
+    }
+
+    req.flash('success', `${product.name} has been added to your shopping cart!`)
+    res.redirect('/products/shopping-cart')
+}))
+
+router.delete('/shopping-cart', (req, res) => {
+
+})
 
 router.get('/:id', catchAsyncErrors(async(req, res) => {
     const { id } = req.params

@@ -3,29 +3,38 @@
         <div class="row row-cols-2 row-cols-md-4 g-8">
             <% for(product of products) {%>
                 <div class="col mb-3">
-                    <div class="card" style="cursor: pointer;">
+                    <div class="card">
                         <img src="https://3.imimg.com/data3/QB/EW/MY-1778575/vegetable-items-500x500.jpg" class="card-img-top" alt="...">
                         <div class="card-body card-img-overlay">
                             <% if (product.tags.includes('OnSale')) {%>
-                                <span class="badge bg-warning">OnSale</span>
-                                <br>
+                                <span class="badge bg-danger btn-sm">OnSale</span>
                                 <% } %>
-                                    <div class="btn btn-primary btn-sm">
-                                        <a href="/products/<%= product._id %>" style="text-decoration: none; color:aliceblue; text-transform: capitalize;">
-                                            <%= product.name %>
-                                        </a>
-                                    </div>
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title">
+
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <h5>
+                                    <a style="text-decoration: none; text-transform:capitalize;" href="/products/<%= product._id %>">
+                                        <%= product.name %>
+                                    </a>
+                                </h5>
+
+                            </li>
+                            <li class="list-group-item">
                                 <%= product.price %> zl per
                                     <%= product.quantity_type %>
-                            </h5>
-                            <div class="d-flex" style="margin-left: auto;">
-                                <button class="btn btn-secondary btn-sm">Add</button>
-                            </div>
+                            </li>
+                            <li class="list-group-item">
+                                <form class="d-inline" method="POST" action="/products/shopping-cart/add">
+                                    <input type="text" hidden name="productID" value="<%= product._id %>">
+                                    <input type="text" hidden name="quantity" value="1">
+                                    <input type="text" hidden name="userID" value="<% if (currentUser) {%><%= currentUser._id%><% } %>">
+                                    <button class="btn btn-light"><i class="fas fa-shopping-cart"></i> Add to cart</button>
+                                </form>
+                            </li>
+                        </ul>
 
-                        </div>
                     </div>
 
                 </div>

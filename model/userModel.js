@@ -2,9 +2,6 @@ const mongoose = require('mongoose')
 const passportLocalMongoose = require('passport-local-mongoose')
 const { Schema } = mongoose
 
-const addressSchema = new Schema({
-
-})
 const userAccountSchema = new Schema({
     first_name: {
         type: String,
@@ -51,6 +48,10 @@ const userAccountSchema = new Schema({
     },
     image: {
         type: String
+    },
+    shopping_cart: {
+        type: Schema.Types.ObjectId,
+        ref: 'ShoppingCart'
     },
     created_date: {
         type: Date,
