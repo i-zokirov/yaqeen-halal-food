@@ -26,7 +26,7 @@
                                     <%= product.quantity_type %>
                             </li>
                             <li class="list-group-item">
-                                <form class="d-inline" method="POST" action="/products/shopping-cart/add">
+                                <form class="d-inline" method="POST" action="/shopping-cart/add">
                                     <input type="text" hidden name="productID" value="<%= product._id %>">
                                     <input type="text" hidden name="quantity" value="1">
                                     <input type="text" hidden name="userID" value="<% if (currentUser) {%><%= currentUser._id%><% } %>">

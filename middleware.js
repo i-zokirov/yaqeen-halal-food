@@ -4,6 +4,10 @@ const ExpressError = require('./utils/expressError')
 
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
+
+        if (req.originalUrl == '/shopping-cart/add') {
+            req.originalUrl = '/products'
+        }
         req.session.returnTo = req.originalUrl
         req.flash('warning', 'You must be signed in first!')
         return res.redirect('/user/login')
