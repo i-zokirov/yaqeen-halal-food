@@ -52,7 +52,6 @@ router.get('/shopping-cart', isLoggedIn, catchAsyncErrors(async(req, res) => {
         for (let index in shopping_cart.products) {
             await shopping_cart.populate(`products.${index}.cart_item`)
         }
-        console.log(shopping_cart)
         res.render('customer/shoppingcart-template', { what: "MyCart", shopping_cart })
     } else {
         req.flash('info', 'You do not have any items in your cart. Add products to your cart to view them.')
@@ -77,15 +76,43 @@ router.post('/shopping-cart/add', isLoggedIn, catchAsyncErrors(async(req, res) =
         user.shopping_cart = new_shopping_cart._id
         await user.save()
     }
-
     req.flash('success', `${product.name} has been added to your shopping cart!`)
     res.redirect('/products/shopping-cart')
+}));
+
+
+router.delete('/shopping-cart/delete=:cartItemId', isLoggedIn, catchAsyncErrors(async(req, res) => {
+    const { cartItemId } = req.params
+    const userID = req.user._id
+    const user = await (await User.findById(userID)).populate('shopping_cart')
+    const shopping_cart = await ShoppingCart.findById(user.shopping_cart._id)
+    for (let index in shopping_cart.products) {
+        await shopping_cart.populate(`products.${index}.cart_item`)
+    }
+    await shopping_cart.products.id(cartItemId).remove()
+    await shopping_cart.save()
+
+    req.flash('success', 'Item has been removed')
+    res.redirect('/products/shopping-cart')
+}));
+
+router.put('/shopping-cart/update=:cartItemId', isLoggedIn, catchAsyncErrors(async(req, res) => {
+    const { cartItemId } = req.params
+    const { quantityupdate } = req.body
+    const userID = req.user._id
+    const user = await (await User.findById(userID)).populate('shopping_cart')
+    const shopping_cart = await ShoppingCart.findById(user.shopping_cart._id)
+    for (let index in shopping_cart.products) {
+        await shopping_cart.populate(`products.${index}.cart_item`)
+        if (shopping_cart.products[index]._id == cartItemId) {
+            shopping_cart.products[index].item_quantity = quantityupdate
+        }
+    }
+    console.log(shopping_cart.products)
+    await shopping_cart.save()
+    req.flash('success', 'Refreshed the quantity of the item!')
+    res.redirect('/products/shopping-cart')
 }))
-
-router.delete('/shopping-cart', (req, res) => {
-
-})
-
 router.get('/:id', catchAsyncErrors(async(req, res) => {
     const { id } = req.params
     const product = await Product.findById(id)

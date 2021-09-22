@@ -1,16 +1,68 @@
 <% layout('layouts/customer-boilerplate')  -%>
 
     <div class="row">
-        <div class="col-12 mb-5">
-            <div class="card">
-                <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <a href="">
+        <div class="container">
+            <table id="cart" class="table table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th style="width:50%">Product</th>
+                        <th style="width:10%">Price</th>
+                        <th style="width:8%">Quantity</th>
+                        <th style="width:22%" class="text-center">Subtotal</th>
+                        <th style="width:10%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (let index in shopping_cart.products) { %>
+                        <tr>
+                            <td data-th="Product">
+                                <div class="row">
+                                    <div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive" /></div>
+                                    <div class="col-sm-10">
+                                        <a href="/products/<%= shopping_cart.products[index].cart_item._id %>">
+                                            <h4 class="nomargin" style="text-transform: capitalize;">
+                                                <%= shopping_cart.products[index].cart_item.name %>
+                                            </h4>
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td data-th="Price">
+                                <span><%= shopping_cart.products[index].cart_item.price %></span> zl</td>
+                            <td data-th="Quantity">
+                                <input type="number" class="form-control text-center" onchange="updateHiddenInputValue('actual-quantity-update-input-<%= shopping_cart.products[index]._id%>', 'hidden-quantity-update-input-<%= shopping_cart.products[index]._id%>')" id="actual-quantity-update-input-<%= shopping_cart.products[index]._id%>"
+                                    value="<%= shopping_cart.products[index].item_quantity %>">
+                            </td>
+                            <td data-th="Subtotal" class="text-center">
+                                <%= shopping_cart.products[index].cart_item.price * shopping_cart.products[index].item_quantity%> zl</td>
+                            <td class="actions" data-th="">
+                                <form action="/products/shopping-cart/update=<%= shopping_cart.products[index]._id%>?_method=PUT" method="POST">
+                                    <input type="number" hidden name="quantityupdate" id="hidden-quantity-update-input-<%= shopping_cart.products[index]._id%>" value="<%= shopping_cart.products[index].item_quantity %>">
+                                    <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
+                                </form>
+                                <form action="/products/shopping-cart/delete=<%= shopping_cart.products[index]._id%>?_method=DELETE" method="POST">
+                                    <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        <% } %>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td><a href="/products" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+                        <td colspan="2" class="hidden-xs"></td>
+                        <td class="hidden-xs text-center"><strong>Total: <span>
+                            <% let result = 0; %>
+                            <% for (let index in shopping_cart.products) {%>
+                                <%   result += shopping_cart.products[index].cart_item.price * shopping_cart.products[index].item_quantity  %>
+                            <% } %> 
+                            <%= result %> 
+                        </span></strong></td>
+                        <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+                    </tr>
+                </tfoot>
+            </table>
 
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
         </div>
+
+    </div>
