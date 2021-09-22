@@ -8,6 +8,7 @@ module.exports.isLoggedIn = (req, res, next) => {
         req.flash('warning', 'You must be signed in first!')
         return res.redirect('/user/login')
     }
+
     next()
 }
 

@@ -13,6 +13,9 @@ const app = express()
 //routers
 const productsRouter = require('./routes/productRoutes')
 const userRouter = require('./routes/userRoutes')
+const shoppingCartRouter = require('./routes/shoppingCartRoutes')
+
+
 
 const PORT = process.env.PORT || 3000
 const User = require('./model/userModel')
@@ -81,8 +84,10 @@ app.get('/', (req, res) => {
     res.redirect('/products')
 })
 
-app.use('/products', productsRouter)
+app.use('/products/', productsRouter)
 app.use('/user', userRouter)
+app.use('/shopping-cart/', shoppingCartRouter)
+
 
 app.get('*', (req, res, next) => {
     next(new ExpressError('Page not found', 404))

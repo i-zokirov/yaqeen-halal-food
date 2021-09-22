@@ -22,15 +22,21 @@
                     </p>
                 </div>
                 <div class="card-body">
-                    <a href="/user/myaccount/edit" class="btn btn-warning">
-                        <% if (currentUser.first_name == "" || currentUser.last_name == "" || currentUser.last_name == "" ||
-                        currentUser.address == "" || currentUser.phone_number == null) {%>
-                            Edit Profile data
-                            <% } else { %>
+                    <div class="container">
+                        <a href="/user/myaccount/edit" class="btn btn-primary">
+                            <% if (currentUser.first_name == "" || currentUser.last_name == "" || currentUser.last_name == "" ||
+                            currentUser.address == "" || currentUser.phone_number == null) {%>
                                 Edit Profile data
-                                <% } %>
-                    </a>
-                    <a href="/user/myaccount" class="btn btn-danger">Edit Payment data</a>
+                                <% } else { %>
+                                    Edit Profile data
+                                    <% } %>
+                        </a>
+                        <a href="/user/myaccount" class="btn btn-warning">Edit Payment data</a>
+                        <form action="/user/myaccount?_method=DELETE" method="POST" style="padding-top: 5px;">
+                            <button class="btn btn-danger">Delete profile account</button>
+                        </form>
+                    </div>
+
                 </div>
             </div>
         </div>

@@ -1,7 +1,9 @@
 const User = require('../model/userModel')
+const ShoppingCart = require('../model/shoppingCartModel')
 const express = require('express');
 const router = express.Router()
 const passport = require('passport')
+const catchAsyncErrors = require('../utils/catchAsyncErrors')
 
 //external middleware functions
 const { isLoggedIn, validateUserData } = require('../middleware')
@@ -53,9 +55,7 @@ router.post('/login', passport.authenticate('local', { failureFlash: true, failu
 });
 
 router.post('/myaccount/edit', isLoggedIn, async(req, res) => {
-
     try {
-        console.log(req.body)
         const { id } = req.user
         const user = await User.findByIdAndUpdate(id, {...req.body })
         await user.save()
@@ -67,5 +67,13 @@ router.post('/myaccount/edit', isLoggedIn, async(req, res) => {
     }
 
 });
+
+router.delete('/myaccount', isLoggedIn, catchAsyncErrors(async(req, res) => {
+    const { _id, shopping_cart } = await req.user.populate('shopping_cart')
+    if (shopping_cart) await ShoppingCart.findByIdAndDelete(shopping_cart._id)
+    await User.findByIdAndDelete(_id)
+    req.flash('success', 'Your account has been deleted!')
+    res.redirect('/')
+}))
 
 module.exports = router
