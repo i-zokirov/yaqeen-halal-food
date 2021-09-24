@@ -21,13 +21,12 @@
                 </li>
 
             </ul>
-            <ul class="navbar-nav" id="shopping-card">
-                <li class="nav-item">
-                    <a class="nav-link" href="/shopping-cart" style="color: aliceblue;"><i class="fas fa-shopping-cart"></i></a>
-                </li>
-            </ul>
+
             <% if(!currentUser) {%>
                 <div class="d-flex">
+                    <div style="padding-right: 5px;">
+                        <a href="/shopping-cart" class="btn btn-outline-primary" style="color: aliceblue;" role="button"><i class="fas fa-shopping-cart"></i> </a>
+                    </div>
                     <div style="padding-right: 5px;">
                         <a href="/user/login" class="btn btn-secondary my-2 my-sm-0" role="button">Sign In</a>
                     </div>
@@ -37,6 +36,9 @@
                 </div>
                 <% } else { %>
                     <form class="d-flex" method="GET" action="/user/logout">
+                        <div style="padding-right: 5px;">
+                            <a href="/shopping-cart" class="btn btn-outline-primary" style="color: aliceblue;" role="button"><i style="font-size: 20px;" class="fas fa-shopping-cart"></i></a>
+                        </div>
                         <div style="padding-right: 5px;">
                             <button class="btn btn-secondary my-2 my-sm-0" type="submit">Sign Out</button>
                         </div>

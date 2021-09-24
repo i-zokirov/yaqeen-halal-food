@@ -1,8 +1,11 @@
-#shopping-card li a {
+#shopping-cart li a {
+    color: aliceblue;
     height: 40px;
     width: 40px;
     line-height: 30px;
     text-align: center;
     font-size: 24px;
-    margin-left: -50px;
+    border: 1px solid aliceblue;
+    border-radius: 30px;
+    /* margin-left: -50px; */
 }
