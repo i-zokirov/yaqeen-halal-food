@@ -19,6 +19,7 @@
         })
 })()
 
+
 // (function() {
 //     const availabletag = document.getElementById('availabletag')
 //     const onsaletag = document.getElementById('onsaletag')

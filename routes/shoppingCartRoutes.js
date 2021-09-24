@@ -83,7 +83,7 @@ router.put('/update=:cartItemId', isLoggedIn, catchAsyncErrors(async(req, res) =
     res.redirect('/shopping-cart')
 }))
 
-
+//placing order
 router.post('/checkout=:cartID', isLoggedIn, catchAsyncErrors(async(req, res) => {
     const { cartID } = req.params
     const { payment_method, total_price } = req.body
@@ -98,10 +98,11 @@ router.post('/checkout=:cartID', isLoggedIn, catchAsyncErrors(async(req, res) =>
             product_name: shopping_cart.products[index].cart_item.name,
             product_id: shopping_cart.products[index].cart_item._id,
             product_price: shopping_cart.products[index].cart_item.price,
-            quantity: shopping_cart.products[index].cart_item.quantity,
+            quantity: shopping_cart.products[index].item_quantity,
             product_quantity_type: shopping_cart.products[index].cart_item.quantity_type,
             product_category: shopping_cart.products[index].cart_item.category
         }
+
         ordered_products.push(product)
     }
 
@@ -116,7 +117,7 @@ router.post('/checkout=:cartID', isLoggedIn, catchAsyncErrors(async(req, res) =>
     await user.save()
 
     req.flash('success', 'Order has been confirmed')
-    res.redirect('/user/myaccount')
+    res.redirect('/user/myaccount/purchases')
 
 }))
 

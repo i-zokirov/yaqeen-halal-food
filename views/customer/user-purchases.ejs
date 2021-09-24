@@ -1,0 +1,55 @@
+<% layout('layouts/customer-boilerplate')  -%>
+
+    <div class="row">
+        <h3>My Puchase history: </h3>
+        <div class="accordion" id="orders">
+            <% let index = 1 %>
+                <% for (order of orders) {%>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading<%=index%>">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%=index%>" aria-expanded="true" aria-controls="collapse<%=index%>">
+              <%= order.created_date %> 
+            </button>
+                        </h2>
+                        <div id="collapse<%=index%>" class="accordion-collapse collapse show" aria-labelledby="heading<%=index%>" data-bs-parent="#orders">
+                            <div class="accordion-body">
+                                <span> Products:
+                            <% for (product of order.products) {%>
+                                <ul style="list-style-type: none; margin: 0; padding: 0;">
+                                    <li>
+                                        <a href="/products/<%= product.product_id %>" style="text-transform: capitalize; text-decoration: none">
+                                            <%= product.product_name %>,
+                                        </a> - <%= product.quantity %> <%= product.product_quantity_type %> - <%= product.product_price  %> zl per <%= product.product_quantity_type %>  
+                                    </li>
+                                </ul>
+                                
+                                <% } %>
+                            </span>
+
+                                <hr>
+
+                                <span> Total price:
+                            <strong><%= order.total_price %> zl</strong>
+                            </span>
+
+                                <br>
+
+                                <span> Payment method:
+                                <strong><%= order.payment_method %></strong>
+                            </span>
+                                <br>
+                                <span> Payment status:
+                               <strong><%= order.payment_status %></strong> 
+                            </span>
+                                <br>
+                                <span> Order status:
+                               <strong><%= order.order_status %></strong> 
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                    <% index += 1 %>
+                        <% } %>
+
+        </div>

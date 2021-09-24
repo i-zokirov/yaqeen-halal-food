@@ -31,7 +31,7 @@
                                     Edit Profile data
                                     <% } %>
                         </a>
-                        <a href="/user/myaccount" class="btn btn-warning">Edit Payment data</a>
+                        <a href="/user/myaccount/purchases" class="btn btn-warning">My purchases</a>
                         <form action="/user/myaccount?_method=DELETE" method="POST" style="padding-top: 5px;">
                             <button class="btn btn-danger">Delete profile account</button>
                         </form>
@@ -63,30 +63,5 @@
                     </ul>
                 </div>
             </div>
-
-            <div style="padding: 10px;">
-                <h4>Order history: </h4>
-            </div>
-            <div class="col-6 mb-5" style="width: 100%;">
-                <div class="accordion" id="accordionExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                          Order name
-                        </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <p>View <a href="#">Ordername</a></p>
-                                <p>Purchased on: <strong>00.00.0000</strong> </p>
-                                <p>Price: <strong>00.00 zl</strong></p>
-                                <p>Payment Status: <strong>Paid</strong></p>
-                                <p>Delivery Status: <strong>Delivered</strong></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>

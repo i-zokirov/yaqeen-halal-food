@@ -4,4 +4,9 @@
         flex: 0 0 100%;
         max-width: 100%;
     }
+    .btn-responsive {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.688rem;
+        border-radius: 0.844em;
+    }
 }

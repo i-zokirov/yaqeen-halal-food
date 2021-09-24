@@ -1,9 +1,11 @@
 const User = require('../model/userModel')
 const ShoppingCart = require('../model/shoppingCartModel')
+const Order = require('../model/ordersModel')
 const express = require('express');
 const router = express.Router()
 const passport = require('passport')
 const catchAsyncErrors = require('../utils/catchAsyncErrors')
+
 
 //external middleware functions
 const { isLoggedIn, validateUserData } = require('../middleware')
@@ -15,6 +17,13 @@ router.get('/myaccount', isLoggedIn, (req, res) => {
 router.get('/myaccount/edit', isLoggedIn, (req, res) => {
     res.render('customer/complete-user-profile-form', { what: "MyAccount" })
 });
+
+router.get('/myaccount/purchases', isLoggedIn, catchAsyncErrors(async(req, res) => {
+    const { id } = req.user
+    const { orders } = await User.findById(id).populate('orders')
+
+    res.render('customer/user-purchases', { what: "My Purchases", orders })
+}))
 
 router.get('/register', (req, res) => {
     res.render('customer/user-register', { what: "Sign Up" })
