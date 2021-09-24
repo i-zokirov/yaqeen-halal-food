@@ -89,8 +89,13 @@ router.post('/checkout=:cartID', isLoggedIn, catchAsyncErrors(async(req, res) =>
     const { payment_method, total_price } = req.body
 
     const shopping_cart = await (await ShoppingCart.findById(cartID)).populate('cart_owner')
-    const user = await User.findById(shopping_cart.cart_owner._id)
 
+    const user = await User.findById(shopping_cart.cart_owner._id)
+    if (user.first_name == "" || user.last_name == "" || user.last_name == "" ||
+        user.address == "" || user.phone_number == null) {
+        req.flash('error', 'Please complete your profile information before placing an order')
+        return res.redirect('/user/myaccount')
+    }
     const ordered_products = []
     for (let index in shopping_cart.products) {
         await shopping_cart.populate(`products.${index}.cart_item`)
@@ -102,20 +107,14 @@ router.post('/checkout=:cartID', isLoggedIn, catchAsyncErrors(async(req, res) =>
             product_quantity_type: shopping_cart.products[index].cart_item.quantity_type,
             product_category: shopping_cart.products[index].cart_item.category
         }
-
         ordered_products.push(product)
     }
-
     const newOrder = await new Order({ products: ordered_products, order_owner: user._id, payment_method, total_price })
     await newOrder.save()
-
-
     user.orders.push(newOrder._id)
     shopping_cart.products = []
-
     await shopping_cart.save()
     await user.save()
-
     req.flash('success', 'Order has been confirmed')
     res.redirect('/user/myaccount/purchases')
 
