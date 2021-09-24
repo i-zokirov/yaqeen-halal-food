@@ -18,3 +18,24 @@
             }, false)
         })
 })()
+
+// (function() {
+//     const availabletag = document.getElementById('availabletag')
+//     const onsaletag = document.getElementById('onsaletag')
+//     const outofstocktag = document.getElementById('outofstocktag')
+
+//     if (outofstocktag.getAttribute('checked')) {
+//         availabletag.setAttribute('checked', 'false')
+//         onsaletag.setAttribute('checked', 'false')
+//     } else if (availabletag.getAttribute('checked')) {
+//         outofstocktag.setAttribute('checked', 'false')
+//     }
+// })()
+
+// document.getElementsByClassName('form-check-input').addEventListener('change', (e) => {
+//     if (outofstocktag.getAttribute('checked')) {
+//         console.log('out of stock')
+//     } else if (availabletag.getAttribute('checked')) {
+//         console.log('available')
+//     }
+// })

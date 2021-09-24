@@ -53,6 +53,10 @@ const userAccountSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'ShoppingCart'
     },
+    orders: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Order'
+    }],
     created_date: {
         type: Date,
         default: Date.now

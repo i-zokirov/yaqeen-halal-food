@@ -56,13 +56,94 @@
                             <% for (let index in shopping_cart.products) {%>
                                 <%   result += shopping_cart.products[index].cart_item.price * shopping_cart.products[index].item_quantity  %>
                             <% } %> 
-                            <%= result %> 
+                            <%= result %> zl
                         </span></strong></td>
-                        <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+                        <td>
+
+                            <button class="btn btn-success btn-block" data-bs-toggle="modal" data-bs-target="#orderCheckout">
+                                    Checkout <i class="fa fa-angle-right"></i>
+                                </button>
+
+
+                        </td>
                     </tr>
                 </tfoot>
             </table>
 
         </div>
+    </div>
 
+
+    <!-- order checkout modal-->
+    <!-- Modal -->
+
+    <div class="modal fade" id="orderCheckout" tabindex="-1" aria-labelledby="orderCheckout" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Order Checkout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Product name</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for (let index in shopping_cart.products) { %>
+                                    <tr>
+                                        <th scope="row" style="text-transform: capitalize;">
+                                            <%= shopping_cart.products[index].cart_item.name %>
+                                        </th>
+                                        <td data-th="Price">
+                                            <span><%= shopping_cart.products[index].cart_item.price %></span> zl</td>
+                                        <td data-th="Quantity">
+                                            <%= shopping_cart.products[index].item_quantity %>
+                                                <%= shopping_cart.products[index].cart_item.quantity_type %>
+                                        </td>
+                                        <td data-th="Subtotal" class="text-center">
+                                            <%= shopping_cart.products[index].cart_item.price * shopping_cart.products[index].item_quantity%> zl</td>
+                                    </tr>
+                                    <% } %>
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <th scope="row">
+                                        Total: <strong><%= result %> zl</strong>
+                                    </th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <div>
+                        <form action="/shopping-cart/checkout=<%= shopping_cart._id%>" method="POST">
+                            <input hidden type="text" name="total_price" value="<%= result %>" required>
+                            <select class="form-select" aria-label="Payment method selection" name="payment_method" required>
+                                <option selected disabled>Choose payment method</option>
+                                <option value="Cash-on-delivery">Payment in Cash on delivery</option>
+                                <option value="Card-on-delivery">Payment by Card on delivery</option>
+                                <option value="Online">Online - pay now</option> 
+                            </select>
+
+                            <br>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Confirm order</button>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
