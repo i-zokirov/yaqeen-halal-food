@@ -1,6 +1,15 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 
+const imageSchema = new Schema({
+    url: String,
+    filename: String
+});
+
+imageSchema.virtual('thumbnail').get(function() {
+    return this.url.replace('/upload', '/upload/w_300')
+})
+
 const productSchema = new Schema({
     name: {
         type: String,
@@ -30,9 +39,7 @@ const productSchema = new Schema({
         required: true,
         enum: ['kg', 'piece']
     },
-    image: {
-        type: String
-    },
+    images: [imageSchema],
     tags: {
         type: Array,
         default: ["Available"]

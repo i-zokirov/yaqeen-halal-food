@@ -4,7 +4,7 @@
             <% for(product of products) {%>
                 <div class="col mb-3">
                     <div class="card">
-                        <img src="https://3.imimg.com/data3/QB/EW/MY-1778575/vegetable-items-500x500.jpg" class="card-img-top" alt="...">
+                        <img src="<%= product.images[0].thumbnail  %>" class="card-img-top" alt="...">
                         <div class="card-body card-img-overlay">
                             <% if (product.tags.includes('OnSale')) {%>
                                 <span class="badge bg-danger btn-sm">OnSale</span>

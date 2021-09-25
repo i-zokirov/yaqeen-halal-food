@@ -1,3 +1,5 @@
+if (process.env.NODE_ENV !== 'production') require('dotenv').config()
+
 const path = require('path')
 const mongoose = require('mongoose')
 const ejsEngineMate = require('ejs-mate')

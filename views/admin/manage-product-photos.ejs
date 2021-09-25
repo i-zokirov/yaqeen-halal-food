@@ -1,0 +1,41 @@
+<% layout('layouts/customer-boilerplate')  -%>
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-xl-6 offset-xl-3">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h4>Manage <u><%= product.name %></u> photos
+                    </h4>
+                    <form action="/products/<%= product._id %>/edit/photos" method="POST" enctype="multipart/form-data">
+                        <label class="form-label" for="product_images">Add more: </label>
+                        <div class="input-group">
+                            <input type="file" class="form-control" name="product_images" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" multiple>
+                            <button class="btn btn-outline-primary" type="submit" id="inputGroupFileAddon04">Upload</button>
+                        </div>
+
+                    </form>
+
+                    <form action="/products/<%= product._id %>/edit/photos" method="POST" enctype="multipart/form-data" class=" mt-5">
+                        <div class="mb-3 row row-cols-1 row-cols-md-2 g-4">
+                            <% product.images.forEach(function(img, index){ %>
+                                <div class="col">
+                                    <img src="<%= img.thumbnail %>" class="img-thumbnail d-block" alt="...">
+                                    <div class="form-check-inline">
+                                        <input type="checkbox" name="deleteImages[]" id="image-<%=index%>" value="<%=img.filename%>">
+                                    </div>
+                                    <label for="image-<%=index%>">Delete</label>
+                                </div>
+                                <%}) %>
+                        </div>
+                        <div class="mb-3">
+                            <button class="btn btn-outline-danger" type="submit"><i class="fa fa-trash-o"></i> Delete selected photos</button>
+                            <a href="/products/<%= product._id %>" role="button" class="btn btn-outline-secondary">Back</a>
+
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>

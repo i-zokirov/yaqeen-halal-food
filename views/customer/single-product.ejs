@@ -1,8 +1,28 @@
 <% layout('layouts/customer-boilerplate')  -%>
     <div class="row">
         <div class="col-6 mb-5">
+            <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <% product.images.forEach((img, i)=>{%>
+                        <div class="carousel-item <%= i=== 0 ? 'active' : '' %>">
+                            <img src="<%= img.url %>" class="d-block w-100" alt="">
+                        </div>
+                        <% }) %>
+                </div>
+                <% if(product.images.length > 1) {%>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                     </button>
+                    <% } %>
+            </div>
+
             <div class="card">
-                <img src="https://source.unsplash.com/MvCde9kgov8" class="card-img-top" alt="...">
+
                 <div class="card-body">
                     <% if (product.tags.includes('OnSale')) {%>
                         <span style="float: left; margin-right: 10px" class="badge bg-warning">OnSale</span>
@@ -29,6 +49,7 @@
                 </ul>
                 <div class="card-body">
                     <a href="/products/<%= product._id %>/edit" class="btn btn-primary">Edit</a>
+                    <a href="/products/<%= product._id %>/edit/photos" class="btn btn-success">Manage Photos</a>
                     <form class="d-inline" method="POST" action="/products/<%= product._id %>?_method=DELETE">
                         <button class="btn btn-secondary">Delete</button>
                     </form>

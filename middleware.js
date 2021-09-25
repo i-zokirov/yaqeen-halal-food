@@ -26,6 +26,7 @@ module.exports.validateUserData = (req, res, next) => {
     }
 }
 module.exports.validateProductData = (req, res, next) => {
+    console.log(req.body)
     const { error } = productSchema.validate(req.body)
     if (error) {
         const msg = error.details.map(el => el.message).join(',')

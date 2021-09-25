@@ -33,7 +33,11 @@ const seedDB = async() => {
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             price: price,
             quantity: quantity,
-            quantity_type: "kg"
+            quantity_type: "kg",
+            images: [{
+                url: 'https://res.cloudinary.com/yaqeen-halal-food-img-cloud/image/upload/v1632599559/Yaqeen-halal-food/bc1r92hg8wwmdpe703ew.jpg',
+                filename: 'Yaqeen-halal-food/bc1r92hg8wwmdpe703ew'
+            }]
         })
         await product.save()
     }
@@ -47,7 +51,11 @@ const seedDB = async() => {
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             price: price,
             quantity: quantity,
-            quantity_type: "kg"
+            quantity_type: "kg",
+            images: [{
+                url: 'https://res.cloudinary.com/yaqeen-halal-food-img-cloud/image/upload/v1632599466/Yaqeen-halal-food/uvyackpw5bx7tdv53ttq.jpg',
+                filename: 'Yaqeen-halal-food/uvyackpw5bx7tdv53ttq'
+            }]
         })
         await product.save()
     }
@@ -60,7 +68,11 @@ const seedDB = async() => {
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             price: price,
             quantity: quantity,
-            quantity_type: "piece"
+            quantity_type: "piece",
+            images: [{
+                url: 'https://res.cloudinary.com/yaqeen-halal-food-img-cloud/image/upload/v1632599649/Yaqeen-halal-food/p6e6duhczrt2rzgpppaj.jpg',
+                filename: 'Yaqeen-halal-food/p6e6duhczrt2rzgpppaj'
+            }]
         })
         await product.save()
     }
@@ -73,7 +85,11 @@ const seedDB = async() => {
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             price: price,
             quantity: quantity,
-            quantity_type: "kg"
+            quantity_type: "kg",
+            images: [{
+                url: 'https://res.cloudinary.com/yaqeen-halal-food-img-cloud/image/upload/v1632597571/Yaqeen-halal-food/yycvlo7khmhrbexqliqa.jpg',
+                fieldname: 'Yaqeen-halal-food/yycvlo7khmhrbexqliqa'
+            }]
         })
         await product.save()
     }
