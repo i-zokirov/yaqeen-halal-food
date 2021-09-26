@@ -1,6 +1,16 @@
+const { string } = require('joi')
 const mongoose = require('mongoose')
 const passportLocalMongoose = require('passport-local-mongoose')
 const { Schema } = mongoose
+
+const imageSchema = new Schema({
+    url: String,
+    filename: String
+})
+
+imageSchema.virtual('thumbnail').get(function() {
+    return this.url.replace('/upload', '/upload/w_300')
+})
 
 const userAccountSchema = new Schema({
     first_name: {
@@ -46,8 +56,11 @@ const userAccountSchema = new Schema({
         type: Boolean,
         default: false,
     },
-    image: {
-        type: String
+    image: imageSchema,
+    default_image: {
+        type: String,
+        default: 'https://res.cloudinary.com/yaqeen-halal-food-img-cloud/image/upload/w_300/v1632617094/avatar_fvqbk2.jpg',
+        required: true
     },
     shopping_cart: {
         type: Schema.Types.ObjectId,

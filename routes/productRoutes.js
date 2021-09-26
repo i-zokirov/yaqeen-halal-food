@@ -1,6 +1,4 @@
 const Product = require('../model/productModel')
-    // const ShoppingCart = require('../model/shoppingCartModel')
-    // const User = require('../model/userModel')
 const express = require('express');
 const router = express.Router();
 const catchAsyncErrors = require('../utils/catchAsyncErrors')
@@ -9,8 +7,8 @@ const catchAsyncErrors = require('../utils/catchAsyncErrors')
 const { isLoggedIn, validateProductData } = require('../middleware');
 
 const multer = require('multer')
-const { storage, cloudinary } = require('../cl_config')
-const upload = multer({ storage })
+const { productsStorage, cloudinary } = require('../cl_config')
+const upload = multer({ storage: productsStorage })
 
 router.get('/', (req, res) => {
     res.render('customer/products-page', { what: "Products" })
@@ -18,7 +16,6 @@ router.get('/', (req, res) => {
 router.get('/add', (req, res) => {
     res.render('admin/add-product', { what: "Add product" })
 })
-
 
 router.get('/fruits', catchAsyncErrors(async(req, res) => {
     const fruits = await Product.find({ category: "fruits" })
@@ -106,12 +103,13 @@ router.post('/:id/edit/photos', upload.array('product_images'), catchAsyncErrors
 
 router.post('/add', upload.array('product_images'), validateProductData, async(req, res) => {
     try {
+
         let { name, category, price, tags, quantity, quantity_type, description } = req.body
         const product = await new Product({ name, category, price, tags, quantity, quantity_type, description })
         product.images = req.files.map(f => ({ url: f.path, filename: f.filename }))
         const registeredProduct = await product.save()
         console.log(registeredProduct)
-        req.flash('success', 'Product has been saved!')
+        req.flash('success', 'Product has been created!')
         res.redirect(`/products/${registeredProduct._id}`)
     } catch (e) {
         req.flash('error', e.message)

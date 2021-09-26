@@ -31,21 +31,21 @@
 
                         <div class="mb-3">
                             <label for="address" class="form-label">Address: </label>
-                            <input type="text" class="form-control" id="address" name="address[St_address]" placeholder="Main St 123">
+                            <input type="text" class="form-control" id="address" value="<%= currentUser.address.St_address%>" name="address[St_address]" placeholder="Main St 123">
                         </div>
                         <div class="mb-3">
                             <label for="address2" class="form-label">Address 2: </label>
-                            <input type="text" class="form-control" id="address2" name="address[St_address2]" placeholder="House, Apartment, floor">
+                            <input type="text" class="form-control" id="address2" value="<%= currentUser.address.St_address2%>" name="address[St_address2]" placeholder="House, Apartment, floor">
                         </div>
 
                         <div class="mb-3 row g-3">
                             <div class="col-md-8">
                                 <label for="city" class="form-label">City: </label>
-                                <input type="text" class="form-control" name="address[city]" id="city">
+                                <input type="text" class="form-control" value="<%= currentUser.address.city%>" name="address[city]" id="city">
                             </div>
                             <div class="col-md-4">
                                 <label for="postalcode" class="form-label">Postal code: </label>
-                                <input type="text" class="form-control" name="address[postal_code]" id="postalcode">
+                                <input type="text" class="form-control" value="<%= currentUser.address.postal_code%>" name="address[postal_code]" id="postalcode">
                             </div>
                         </div>
 
@@ -53,7 +53,11 @@
                             <div>
                                 <label for="voivodship" class="form-label">Voivodship: </label>
                                 <select id="voivodship" name="address[voivodship]" class="form-select">
+                                    <% if( currentUser.address.voivodship) {%>
+                                        <option selected disabled><%= currentUser.address.voivodship %> </option>
+                                        <% } else {%> 
                                   <option selected disabled>Choose...</option>
+                                  <% } %> 
                                   <option>Greater Poland</option>
                                   <option>Kuyavia-Pomerania</option>
                                   <option>Lesser Poland</option>

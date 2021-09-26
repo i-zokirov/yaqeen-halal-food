@@ -3,41 +3,50 @@
     <div class="row">
         <div class="col-4 mb-5">
             <div class="card">
-                <img src="https://www.seekpng.com/png/detail/514-5147412_default-avatar-icon.png" alt="">
-                <div class="card-body text-center">
-                    <h5>
-                        <% if (currentUser.first_name && currentUser.last_name )  {%>
-                            <%= currentUser.first_name %>
-                                <%= currentUser.last_name %>
-                                    <% } else {%>
+                <% if (currentUser.image) {%>
+                    <img src="<%= currentUser.image.url %>" alt="">
+                    <% } else {%>
+                        <img src="<%= currentUser.default_image %>" alt="">
+                        <% } %>
+                            <button type="button" class="btn btn-outline-secondary btn-block" data-bs-toggle="modal" data-bs-target="#profile-photo">
+                            Upload photo
+                          </button>
+
+
+                            <div class="card-body text-center">
+                                <h5>
+                                    <% if (currentUser.first_name && currentUser.last_name )  {%>
+                                        <%= currentUser.first_name %>
+                                            <%= currentUser.last_name %>
+                                                <% } else {%>
+                                                    <%= currentUser.username  %>
+                                                        <% } %>
+                                </h5>
+
+                                <span>
+                                    <% if(currentUser.first_name != "" && currentUser.last_name != "") {%>
+                                        Username:
                                         <%= currentUser.username  %>
                                             <% } %>
-                    </h5>
-
-                    <p>
-                        <% if(currentUser.first_name != "" && currentUser.last_name != "") {%>
-                            Username:
-                            <%= currentUser.username  %>
-                                <% } %>
-                    </p>
-                </div>
-                <div class="card-body">
-                    <div class="container">
-                        <a href="/user/myaccount/edit" class="btn btn-primary">
-                            <% if (currentUser.first_name == "" || currentUser.last_name == "" || currentUser.last_name == "" ||
+                                </span>
+                            </div>
+                            <div class="card-body">
+                                <div class="container">
+                                    <a href="/user/myaccount/edit" class="btn btn-outline-primary">
+                                        <% if (currentUser.first_name == "" || currentUser.last_name == "" || currentUser.last_name == "" ||
                             currentUser.address == "" || currentUser.phone_number == null) {%>
-                                Complete Profile data
-                                <% } else { %>
-                                    Edit Profile data
-                                    <% } %>
-                        </a>
-                        <a href="/user/myaccount/purchases" class="btn btn-warning">My purchases</a>
-                        <form action="/user/myaccount?_method=DELETE" method="POST" style="padding-top: 5px;">
-                            <button class="btn btn-danger">Delete profile account</button>
-                        </form>
-                    </div>
+                                            Complete Profile data
+                                            <% } else { %>
+                                                Edit Profile data
+                                                <% } %>
+                                    </a>
+                                    <a href="/user/myaccount/purchases" class="btn btn-outline-warning">My purchases</a>
+                                    <form action="/user/myaccount?_method=DELETE" method="POST" style="padding-top: 5px;">
+                                        <button class="btn btn-outline-danger">Delete profile account</button>
+                                    </form>
+                                </div>
 
-                </div>
+                            </div>
             </div>
         </div>
 
@@ -62,6 +71,37 @@
                         </li>
                     </ul>
                 </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="modal fade" id="profile-photo" tabindex="-1" aria-labelledby="profile-photoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profile-photoLabel">Upload your photo: </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/user/myaccount/profile-photo" method="POST" enctype="multipart/form-data">
+
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label class="form-label" for="user_image"></label>
+                            <input class="form-control" type="file" id="user_image" name="user_image" required>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

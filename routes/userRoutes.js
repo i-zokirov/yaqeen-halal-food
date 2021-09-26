@@ -10,6 +10,11 @@ const catchAsyncErrors = require('../utils/catchAsyncErrors')
 //external middleware functions
 const { isLoggedIn, validateUserData } = require('../middleware')
 
+//cloudinary/multer set up
+const multer = require('multer')
+const { usersStorage, cloudinary } = require('../cl_config')
+const upload = multer({ storage: usersStorage })
+
 
 router.get('/myaccount', isLoggedIn, (req, res) => {
     res.render('customer/user-account', { what: "MyAccount" })
@@ -76,6 +81,18 @@ router.post('/myaccount/edit', isLoggedIn, async(req, res) => {
     }
 
 });
+
+router.post('/myaccount/profile-photo', upload.single('user_image'), isLoggedIn, catchAsyncErrors(async(req, res) => {
+    const { _id } = req.user
+    const { filename, path } = req.file
+    if (req.user.image) {
+        await cloudinary.uploader.destroy(req.user.image.filename)
+    }
+    const user = await User.findByIdAndUpdate(_id, { image: { url: path, filename } })
+    await user.save()
+    req.flash('success', 'Your photo has been uploaded!')
+    res.redirect('/user/myaccount')
+}))
 
 router.delete('/myaccount', isLoggedIn, catchAsyncErrors(async(req, res) => {
     const { _id, shopping_cart } = await req.user.populate('shopping_cart')
