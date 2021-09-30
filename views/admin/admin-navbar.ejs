@@ -8,25 +8,33 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/">Home</a>
+                    <a class="nav-link active" href="/">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/products">Products</a>
+                    <a class="nav-link" href="/admin/products">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/products/onsale">On Sale</a>
+                    <a class="nav-link" href="/admin/products/onsale">Products On Sale</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/products/add">Add Product</a>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/products/add">Add Product</a>
+                        <div class="dropdown-divider"></div>
+                        <!-- <a class="dropdown-item" href="#">Estimated Stock Value</a>
+                        <div class="dropdown-divider"></div> -->
+                        <a class="dropdown-item" href="/admin/users">View Users</a>
+                        <a class="dropdown-item" href="/admin/orders">View Orders</a>
+                        <a class="dropdown-item" href="/admin/reviews">View Reviews</a>
+                    </div>
                 </li>
 
             </ul>
 
             <% if(!currentUser) {%>
                 <div class="d-flex">
-                    <div style="padding-right: 5px;">
-                        <a href="/shopping-cart" class="btn btn-outline-primary" style="color: aliceblue;" role="button"><i style="font-size: 20px;" class="fas fa-shopping-cart"></i></a>
-                    </div>
+
                     <div style="padding-right: 5px;">
                         <a href="/user/login" class="btn btn-secondary my-2 my-sm-0" role="button">Sign In</a>
                     </div>
@@ -36,9 +44,7 @@
                 </div>
                 <% } else { %>
                     <form class="d-flex" method="GET" action="/user/logout">
-                        <div style="padding-right: 5px;">
-                            <a href="/shopping-cart" class="btn btn-outline-primary" style="color: aliceblue;" role="button"><i style="font-size: 20px;" class="fas fa-shopping-cart"></i></a>
-                        </div>
+
                         <div style="padding-right: 5px;">
                             <button class="btn btn-secondary my-2 my-sm-0" type="submit">Sign Out</button>
                         </div>

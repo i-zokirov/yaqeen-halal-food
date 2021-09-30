@@ -39,7 +39,7 @@ const ordersSchema = new Schema({
         type: String,
         required: true,
         default: 'New',
-        enum: ["New", "Packed", "Delivered", "Received"]
+        enum: ["New", "Packed", "Delivered", "Received", "Cancelled"]
     },
     total_price: {
         type: Number,

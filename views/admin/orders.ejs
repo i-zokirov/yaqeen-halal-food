@@ -1,0 +1,162 @@
+<% layout('layouts/customer-boilerplate')  -%>
+
+    <div class="row">
+
+        <input style="margin-bottom: 5px;" class="form-control" type="text" id="user_input" onkeyup="filterByOrderID()" placeholder="Search by Order ID ...">
+
+        <table class="table table-hover" id="orders_table">
+            <thead>
+                <tr>
+                    <th scope="col">Index</th>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">Order Date</th>
+                    <th scope="col">Order Status</th>
+                    <th scope="col">Payment Status</th>
+                    <th scope="col">Payment Method</th>
+                    <th scope="col">Total order value</th>
+                    <th scope="col">Ordered by</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% let table_index = 0%>
+                    <% for(let order of orders){ %>
+                        <% table_index += 1%>
+                            <tr>
+                                <td>
+                                    <%= table_index %>
+                                </td>
+                                <td>
+                                    <%= order._id %>
+                                </td>
+                                <td>
+                                    <%= order.created_date.getDate()%>.
+                                        <%= order.created_date.getMonth()%>.
+                                            <%= order.created_date.getFullYear()%> <span><%= order.created_date.getHours()%>:<%= order.created_date.getMinutes()%></span>
+
+
+                                </td>
+                                <td>
+                                    <form action="">
+                                        <select style="font-size: 14px;" onchange="UpdateHiddenValue('order_status', 'hidden-update-input')" id="order_status" class="form-select" name="order_status" aria-label="order status">
+                                    <option selected value="<%= order.order_status %>"><%= order.order_status %></option>
+                                    <option value="Packed">Packed</option>
+                                    <option value="Delivered">Delivered</option>
+                                    <option value="Received">Received</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                  </select>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="">
+                                        <select onchange="UpdateHiddenValue('payment_status', 'hidden-update-input2')" id="payment_status" style="font-size: 14px;" class="form-select" name="payment_status" aria-label="payment status">
+                                    <option selected value="<%= order.payment_status %>"><%= order.payment_status %></option>
+                                    <option value="Paid-in-cash">Paid-in-cash</option>
+                                    <option disabled value="Paid-online">Paid-online</option>
+                                    <option value="Paid-by-card">Paid-by-card</option>
+                                    <option value="Not Paid">Not Paid</option>
+                                  </select>
+                                    </form>
+
+                                </td>
+                                <td>
+                                    <%= order.payment_method %>
+                                </td>
+                                <td>
+                                    <%= order.total_price %> zl
+                                </td>
+                                <td>
+                                    <a href="" style="text-decoration: none;">
+                                        <%= order.order_owner.first_name %>
+                                            <%= order.order_owner.last_name %>
+                                    </a>
+
+                                </td>
+                                <td class="actions">
+                                    <form action="/admin/orders" method="POST">
+                                        <input type="text" hidden name="order_status" id="hidden-update-input" value="<%= order.order_status %>">
+                                        <input type="text" hidden name="payment_status" id="hidden-update-input2" value="<%= order.payment_status %>">
+                                        <input type="text" hidden name="order_id" value="<%= order._id %>">
+                                        <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
+                                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#order<%= table_index %>">View</button>
+                                    </form>
+
+                                </td>
+
+                            </tr>
+                            <% } %>
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <% let order_index = 0 %>
+        <% for(let order of orders) {%>
+            <% order_index += 1 %>
+                <!-- Modal -->
+                <div class="modal fade" id="order<%= order_index %>" tabindex="-1" aria-labelledby="orderLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h6 class="modal-title" id="orderLabel">
+                                    Order ID:
+                                    <%= order._id %>
+                                </h6>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <span> Ordered Products:
+                                    <ul style="list-style: none;">
+                                        <% for (let product of order.products) {%>
+                                            <li>
+                                                <a style="text-decoration: none; text-transform:capitalize" href="">
+                                                    <%= product.product_name %>
+                                                </a> -
+                                                <%= product.quantity%>
+                                                    <%= product.product_quantity_type%> - <%= product.product_price %>zl per <%= product.product_quantity_type  %>  
+                                            </li>
+                                            <% } %>
+                                    </ul>
+                                </span>
+                                <hr>
+                                <span> Total price: 
+                                    <b><%= order.total_price %> zl</b>
+                                </span>
+                                <hr>
+                                <span>
+                                    Payment method: <b><%= order.payment_method %></b>   
+                                </span>
+                                <hr>
+                                <span>
+                                    Payment status: <b><%= order.payment_status %></b>
+                                </span>
+                                <hr>
+                                <span>Ordered by:
+                                  <%= order.order_owner.first_name %> <%= order.order_owner.last_name %>  
+                                </span>
+                                <hr>
+                                <span>
+                                    Delivery Address: <span><%= order.order_owner.address.St_address %> <%= order.order_owner.address.St_address2 %>, <%= order.order_owner.address.postal_code %>, <%= order.order_owner.address.city %>, <%= order.order_owner.address.voivodship %></span>
+                                </span>
+                                <hr>
+                                <span>
+                                    Contact Number: <%= order.order_owner.phone_number %> 
+                                </span>
+                                <hr>
+                                <span>
+                                    Ordered date: <b><%= order.created_date.getDate()%>.<%= order.created_date.getMonth()%>.<%= order.created_date.getFullYear()%> <%= order.created_date.getHours()%>:<%= order.created_date.getMinutes()%></b>
+                                </span>
+                                <hr>
+
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Print PDF</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% } %>

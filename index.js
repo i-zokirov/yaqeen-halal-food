@@ -16,8 +16,7 @@ const app = express()
 const productsRouter = require('./routes/productRoutes')
 const userRouter = require('./routes/userRoutes')
 const shoppingCartRouter = require('./routes/shoppingCartRoutes')
-
-
+const adminRoutes = require('./routes/adminRoutes')
 
 const PORT = process.env.PORT || 3000
 const User = require('./model/userModel')
@@ -89,19 +88,16 @@ app.get('/', (req, res) => {
 app.use('/products/', productsRouter)
 app.use('/user', userRouter)
 app.use('/shopping-cart/', shoppingCartRouter)
-
-
+app.use('/admin', adminRoutes)
 app.get('*', (req, res, next) => {
     next(new ExpressError('Page not found', 404))
 })
-
 
 //error handler
 app.use((err, req, res, next) => {
     const { statuscode = 500, message } = err
     if (!err.message) err.message = "Something went wrong!"
     res.status(statuscode).render('layouts/error-template', { what: "Error", err })
-
 })
 
 app.listen(PORT, () => {
