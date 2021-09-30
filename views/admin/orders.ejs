@@ -37,27 +37,23 @@
 
                                 </td>
                                 <td>
-                                    <form action="">
-                                        <select style="font-size: 14px;" onchange="UpdateHiddenValue('order_status', 'hidden-update-input')" id="order_status" class="form-select" name="order_status" aria-label="order status">
-                                    <option selected value="<%= order.order_status %>"><%= order.order_status %></option>
-                                    <option value="Packed">Packed</option>
-                                    <option value="Delivered">Delivered</option>
-                                    <option value="Received">Received</option>
-                                    <option value="Cancelled">Cancelled</option>
-                                  </select>
-                                    </form>
+                                    <select style="font-size: 14px;" onchange="UpdateHiddenValue('order_status_<%= order._id %>', 'hidden-update-input-<%= order._id %>')" id="order_status_<%= order._id %>" class="form-select" aria-label="order status">
+                                        <option selected disabled value="<%= order.order_status %>"><%= order.order_status %></option>
+                                        <option disabled value="New">New</option>
+                                        <option value="Packed">Packed</option>
+                                        <option value="Delivered">Delivered</option>
+                                        <option value="Received">Received</option>
+                                        <option value="Cancelled">Cancelled</option>
+                                    </select>
                                 </td>
                                 <td>
-                                    <form action="">
-                                        <select onchange="UpdateHiddenValue('payment_status', 'hidden-update-input2')" id="payment_status" style="font-size: 14px;" class="form-select" name="payment_status" aria-label="payment status">
-                                    <option selected value="<%= order.payment_status %>"><%= order.payment_status %></option>
-                                    <option value="Paid-in-cash">Paid-in-cash</option>
-                                    <option disabled value="Paid-online">Paid-online</option>
-                                    <option value="Paid-by-card">Paid-by-card</option>
-                                    <option value="Not Paid">Not Paid</option>
-                                  </select>
-                                    </form>
-
+                                    <select onchange="UpdateHiddenValue('payment_status_<%= order._id %>', 'hidden-update-input-<%= order._id %>-2')" id="payment_status_<%= order._id %>" style="font-size: 14px;" class="form-select" name="payment_status" aria-label="payment status">
+                                            <option selected disabled value="<%= order.payment_status %>"><%= order.payment_status %></option>
+                                            <option value="Paid-in-cash">Paid-in-cash</option>
+                                            <option disabled value="Paid-online">Paid-online</option>
+                                            <option value="Paid-by-card">Paid-by-card</option>
+                                            <option disabled value="Not Paid">Not Paid</option>
+                                    </select>
                                 </td>
                                 <td>
                                     <%= order.payment_method %>
@@ -74,8 +70,8 @@
                                 </td>
                                 <td class="actions">
                                     <form action="/admin/orders" method="POST">
-                                        <input type="text" hidden name="order_status" id="hidden-update-input" value="<%= order.order_status %>">
-                                        <input type="text" hidden name="payment_status" id="hidden-update-input2" value="<%= order.payment_status %>">
+                                        <input type="text" hidden name="order_status" id="hidden-update-input-<%= order._id %>" value="<%= order.order_status %>">
+                                        <input type="text" hidden name="payment_status" id="hidden-update-input-<%= order._id %>-2" value="<%= order.payment_status %>">
                                         <input type="text" hidden name="order_id" value="<%= order._id %>">
                                         <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
                                         <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#order<%= table_index %>">View</button>

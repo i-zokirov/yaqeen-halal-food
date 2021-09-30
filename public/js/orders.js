@@ -2,7 +2,6 @@ function UpdateHiddenValue(changedSelect, givenhiddenInput) {
     let select = document.getElementById(changedSelect)
     let data = select.options[select.selectedIndex].value
     let hiddenInput = document.getElementById(givenhiddenInput)
-    hiddenInput.setAttribute('name', changedSelect)
     hiddenInput.setAttribute('value', data)
 }
 
