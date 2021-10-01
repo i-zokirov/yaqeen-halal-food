@@ -8,8 +8,10 @@
                     <div class="card-body">
                         <h5 class="card-title text-uppercase mb-0">Manage Users</h5>
                     </div>
+                    <input style="margin-bottom: 10px;" class="form-control" type="text" id="user_input" onkeyup="filterByName()" placeholder="Search by name ...">
+
                     <div class="table-responsive">
-                        <table class="table no-wrap user-table mb-0">
+                        <table id="users_table" class="table no-wrap user-table mb-0">
                             <thead>
                                 <tr>
                                     <th scope="col" class="border-0 text-uppercase font-medium pl-4">#</th>
@@ -30,7 +32,6 @@
                                                     <h6 class="font-medium mb-0">
                                                         <%= index %>
                                                     </h6>
-
                                                 </td>
                                                 <td>
                                                     <h5 class="font-medium mb-0">

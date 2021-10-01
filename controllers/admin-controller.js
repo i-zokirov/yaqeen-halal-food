@@ -3,6 +3,17 @@ const Order = require('../model/ordersModel')
 const User = require('../model/userModel')
 const { cloudinary } = require('../cl_config')
 
+
+//dashboard route
+module.exports.render_admin_dashboard = async(req, res) => {
+    const newOrders = await Order.find({ order_status: "New" })
+    const cancelledOrders = await Order.find({ order_status: "Cancelled" })
+    const newOrdersCount = newOrders.length
+    const cancelledOrdersCount = cancelledOrders.length
+
+    res.render('admin/admin-dash', { what: 'Admin Dashboard', newOrdersCount, cancelledOrdersCount })
+}
+
 //product route controllers
 module.exports.render_products = async(req, res) => {
     const { category } = (req.query)

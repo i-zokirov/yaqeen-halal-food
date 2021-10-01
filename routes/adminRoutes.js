@@ -9,18 +9,23 @@ const admin_controller = require('../controllers/admin-controller')
 
 
 const multer = require('multer')
-const { productsStorage } = require('../cl_config')
+const { productsStorage } = require('../cl_config');
 const upload = multer({ storage: productsStorage })
+
+
+//dashboard
+router.route('/')
+    .get(isLoggedIn, isAdmin, (req, res) => { res.redirect('/admin/dashboard') })
+
+router.route('/dashboard')
+    .get(isLoggedIn, isAdmin, catchAsyncErrors(admin_controller.render_admin_dashboard))
 
 //order routes
 router.route('/orders')
     .get(isLoggedIn, isAdmin, catchAsyncErrors(admin_controller.render_orders))
     .post(isLoggedIn, isAdmin, catchAsyncErrors(admin_controller.update_order));
 
-
-
 //products routes
-
 router.route('/products')
     .get(isLoggedIn, isAdmin, catchAsyncErrors(admin_controller.render_products))
 

@@ -1,0 +1,60 @@
+<% layout('layouts/customer-boilerplate')  -%>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+
+            <div class="col">
+                <div class="card text-white bg-info mb-3" style="max-width: 40rem;">
+                    <div class="card-header">Info</div>
+                    <div class="card-body">
+                        <h4 class="card-title">NEW Orders</h4>
+                        <span>You have got <%= newOrdersCount %>  orders with "NEW" status</span>
+                        <br>
+                        <hr>
+                        <% if (newOrdersCount == 0) {%>
+                            <a href="/admin/orders" style="color: aliceblue; text-decoration: none">View all</a>
+                            <% } else { %>
+                                <a href="/admin/orders?order_status=New" style="color: aliceblue; text-decoration: none">View new orders</a>
+                                <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card text-white bg-warning mb-3" style="max-width: 40rem;">
+                    <div class="card-header">Warning</div>
+                    <div class="card-body">
+                        <h4 class="card-title">Cancelled Orders: </h4>
+                        <span> <%= cancelledOrdersCount %> order(s) have been cancelled.</span>
+                        <br>
+                        <hr>
+                        <% if (cancelledOrdersCount.length != 0) {%>
+                            <a href="/admin/orders?order_status=Cancelled" style="color: aliceblue; text-decoration: none">View Cancelled orders</a>
+                            <% } %>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col">
+                <div class="card text-white bg-danger mb-3" style="max-width: 40rem;">
+                    <div class="card-header">Important</div>
+                    <div class="card-body">
+                        <h4 class="card-title">New reviews</h4>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card text-white bg-secondary mb-3" style="max-width: 40rem;">
+                    <div class="card-header">FYI</div>
+                    <div class="card-body">
+                        <h4 class="card-title">New Users registered</h4>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
