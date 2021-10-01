@@ -21,3 +21,10 @@ function filterByProductName() {
     }
 
 }
+
+
+function updateHiddenInput(shownInput, hiddenInput) {
+    const data = document.getElementById(shownInput).value
+    const target = document.getElementById(hiddenInput)
+    target.setAttribute('value', data)
+}

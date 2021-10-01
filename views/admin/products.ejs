@@ -1,66 +1,84 @@
 <% layout('layouts/customer-boilerplate')  -%>
 
     <div class="container">
-        <input style="margin-bottom: 5px;" class="form-control" type="text" id="user_input" onkeyup="filterByProductName()" placeholder="Search by product name ...">
+        <input style="margin-bottom: 10px;" class="form-control" type="text" id="user_input" onkeyup="filterByProductName()" placeholder="Search by product name ...">
+        <ul class="nav justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/admin/products">All</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/products?category=fruits">Fruits</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/products?category=vegetables">Vegetables</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/products?category=meat">Meat</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/products?category=spices">Spices</a>
+            </li>
+        </ul>
+        <div class="row">
+            <table id="products_table" class="table table-hover table-condensed">
+                <thead>
 
-        <table id="products_table" class="table table-hover table-condensed">
-            <thead>
 
-
-                <tr>
-                    <th style="width:50%">Product name</th>
-                    <th style="width:10%">Price</th>
-                    <th style="width:8%">Quantity</th>
-                    <th style="width:22%" class="text-center">Category</th>
-                    <th style="width:10%">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% for (let product of products) {%>
                     <tr>
-                        <td data-th="Product">
-                            <div class="row">
-                                <div class="col-sm-2 hidden-xs"><img src=" " alt="..." class="img-responsive" /></div>
-                                <div class="col-sm-10">
-                                    <h6 class="nomargin" style="text-transform: capitalize;">
-                                        <a href="">
-                                            <%= product.name %>
-                                        </a>
-                                    </h6>
-                                    <p>
-                                        <%= product.description %>
-                                    </p>
-                                </div>
-                            </div>
-                        </td>
-                        <td data-th="Price">
-                            <%= product.price %> zl</td>
-                        <td data-th="Quantity">
-                            <input type="number" class="form-control text-center" value="<%= product.quantity %>">
-                            <%= product.quantity_type %>
-                        </td>
-                        <td data-th="Subtotal" class="text-center">
-                            <a href="/admin/products?category=<%= product.category %>" style="text-decoration: none;">
-                                <%= product.category %>
-                            </a>
-                        </td>
-                        <td class="actions" data-th="">
-                            <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
-                            <a href="/admin/products/<%= product._id %>/edit" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                            <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
-                        </td>
+                        <th style="width:50%">Product name</th>
+                        <th style="width:10%">Price</th>
+                        <th style="width:8%">Quantity</th>
+                        <th style="width:22%" class="text-center">
+                            Category
+                        </th>
+
+                        <th style="width:10%">Actions</th>
                     </tr>
-                    <% } %>
+                </thead>
+                <tbody>
+                    <% for (let product of products) {%>
+                        <tr>
+                            <td data-th="Product name">
+                                <div class="row">
+                                    <div class="col-sm-2 hidden-xs display-none-sm-screen"><img src=" " alt="..." class="img-responsive" /></div>
+                                    <div class="col-sm-10">
+                                        <h6 class="nomargin" style="text-transform: capitalize;">
+                                            <a href="/products/<%= product._id %>">
+                                                <%= product.name %>
+                                            </a>
+                                        </h6>
+                                        <p class="display-none-sm-screen">
+                                            <%= product.description %>
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td data-th="Price">
+                                <%= product.price %> zl</td>
+                            <td data-th="Quantity">
+                                <input type="number" onchange="updateHiddenInput('shown<%= product._id %>', 'hidden<%= product._id %>')" id="shown<%= product._id %>" class="form-control text-center" value="<%= product.quantity %>">
+                                <%= product.quantity_type %>
+                            </td>
+                            <td data-th="Subtotal" class="text-center">
+                                <a href="/admin/products?category=<%= product.category %>" style="text-decoration: none;">
+                                    <%= product.category %>
+                                </a>
+                            </td>
+                            <td class="actions" data-th="Actions">
+                                <form action="/admin/products/<%= product._id %>/edit?_method=PUT" method="POST">
+                                    <input type="number" name="quantity" hidden id="hidden<%= product._id %>" value="<%= product.quantity %>">
+                                    <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
+                                </form>
+                                <a href="/admin/products/<%= product._id %>/edit" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                                <form action="/admin/products/<%= product._id %>?_method=DELETE" method="POST">
+                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        <% } %>
 
-            </tbody>
-            <tfoot>
+                </tbody>
+            </table>
+        </div>
 
-                <!-- <tr>
-                    <td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
-                    <td colspan="2" class="hidden-xs"></td>
-                    <td class="hidden-xs text-center"><strong>Total $1.99</strong></td>
-                    <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
-                </tr> -->
-            </tfoot>
-        </table>
     </div>

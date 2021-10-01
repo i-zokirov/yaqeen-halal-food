@@ -9,4 +9,7 @@
         font-size: 0.688rem;
         border-radius: 0.844em;
     }
+    .display-none-sm-screen {
+        display: none;
+    }
 }

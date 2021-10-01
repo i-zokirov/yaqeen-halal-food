@@ -4,40 +4,64 @@
 
         <input style="margin-bottom: 5px;" class="form-control" type="text" id="user_input" onkeyup="filterByOrderID()" placeholder="Search by Order ID ...">
 
-        <table class="table table-hover" id="orders_table">
-            <thead>
-                <tr>
-                    <th scope="col">Index</th>
-                    <th scope="col">Order ID</th>
-                    <th scope="col">Order Date</th>
-                    <th scope="col">Order Status</th>
-                    <th scope="col">Payment Status</th>
-                    <th scope="col">Payment Method</th>
-                    <th scope="col">Total order value</th>
-                    <th scope="col">Ordered by</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% let table_index = 0%>
-                    <% for(let order of orders){ %>
-                        <% table_index += 1%>
-                            <tr>
-                                <td>
-                                    <%= table_index %>
-                                </td>
-                                <td>
-                                    <%= order._id %>
-                                </td>
-                                <td>
-                                    <%= order.created_date.getDate()%>.
-                                        <%= order.created_date.getMonth()%>.
-                                            <%= order.created_date.getFullYear()%> <span><%= order.created_date.getHours()%>:<%= order.created_date.getMinutes()%></span>
+        <div class="row">
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/admin/orders">All</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/orders?order_status=New">New</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/orders?order_status=Packed">Packed</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/orders?order_status=Delivered">Delivered</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/orders?order_status=Received">Received</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/orders?order_status=Cancelled">Cancelled</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row">
+            <table class="table table-hover" id="orders_table">
+                <thead>
+                    <tr>
+                        <th scope="col">Index</th>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Order Date</th>
+                        <th scope="col">Order Status</th>
+                        <th scope="col">Payment Status</th>
+                        <th scope="col">Payment Method</th>
+                        <th scope="col">Total order value</th>
+                        <th scope="col">Ordered by</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% let table_index = 0%>
+                        <% for(let order of orders){ %>
+                            <% table_index += 1%>
+                                <tr>
+                                    <td>
+                                        <%= table_index %>
+                                    </td>
+                                    <td>
+                                        <%= order._id %>
+                                    </td>
+                                    <td>
+                                        <%= order.created_date.getDate()%>.
+                                            <%= order.created_date.getMonth()%>.
+                                                <%= order.created_date.getFullYear()%> <span><%= order.created_date.getHours()%>:<%= order.created_date.getMinutes()%></span>
 
 
-                                </td>
-                                <td>
-                                    <select style="font-size: 14px;" onchange="UpdateHiddenValue('order_status_<%= order._id %>', 'hidden-update-input-<%= order._id %>')" id="order_status_<%= order._id %>" class="form-select" aria-label="order status">
+                                    </td>
+                                    <td>
+                                        <select style="font-size: 14px;" onchange="UpdateHiddenValue('order_status_<%= order._id %>', 'hidden-update-input-<%= order._id %>')" id="order_status_<%= order._id %>" class="form-select" aria-label="order status">
                                         <option selected disabled value="<%= order.order_status %>"><%= order.order_status %></option>
                                         <option disabled value="New">New</option>
                                         <option value="Packed">Packed</option>
@@ -45,44 +69,45 @@
                                         <option value="Received">Received</option>
                                         <option value="Cancelled">Cancelled</option>
                                     </select>
-                                </td>
-                                <td>
-                                    <select onchange="UpdateHiddenValue('payment_status_<%= order._id %>', 'hidden-update-input-<%= order._id %>-2')" id="payment_status_<%= order._id %>" style="font-size: 14px;" class="form-select" name="payment_status" aria-label="payment status">
+                                    </td>
+                                    <td>
+                                        <select onchange="UpdateHiddenValue('payment_status_<%= order._id %>', 'hidden-update-input-<%= order._id %>-2')" id="payment_status_<%= order._id %>" style="font-size: 14px;" class="form-select" name="payment_status" aria-label="payment status">
                                             <option selected disabled value="<%= order.payment_status %>"><%= order.payment_status %></option>
                                             <option value="Paid-in-cash">Paid-in-cash</option>
                                             <option disabled value="Paid-online">Paid-online</option>
                                             <option value="Paid-by-card">Paid-by-card</option>
                                             <option disabled value="Not Paid">Not Paid</option>
                                     </select>
-                                </td>
-                                <td>
-                                    <%= order.payment_method %>
-                                </td>
-                                <td>
-                                    <%= order.total_price %> zl
-                                </td>
-                                <td>
-                                    <a href="" style="text-decoration: none;">
-                                        <%= order.order_owner.first_name %>
-                                            <%= order.order_owner.last_name %>
-                                    </a>
+                                    </td>
+                                    <td>
+                                        <%= order.payment_method %>
+                                    </td>
+                                    <td>
+                                        <%= order.total_price %> zl
+                                    </td>
+                                    <td>
+                                        <a href="" style="text-decoration: none;">
+                                            <%= order.order_owner.first_name %>
+                                                <%= order.order_owner.last_name %>
+                                        </a>
 
-                                </td>
-                                <td class="actions">
-                                    <form action="/admin/orders" method="POST">
-                                        <input type="text" hidden name="order_status" id="hidden-update-input-<%= order._id %>" value="<%= order.order_status %>">
-                                        <input type="text" hidden name="payment_status" id="hidden-update-input-<%= order._id %>-2" value="<%= order.payment_status %>">
-                                        <input type="text" hidden name="order_id" value="<%= order._id %>">
-                                        <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
-                                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#order<%= table_index %>">View</button>
-                                    </form>
+                                    </td>
+                                    <td class="actions">
+                                        <form action="/admin/orders" method="POST">
+                                            <input type="text" hidden name="order_status" id="hidden-update-input-<%= order._id %>" value="<%= order.order_status %>">
+                                            <input type="text" hidden name="payment_status" id="hidden-update-input-<%= order._id %>-2" value="<%= order.payment_status %>">
+                                            <input type="text" hidden name="order_id" value="<%= order._id %>">
+                                            <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
+                                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#order<%= table_index %>">View</button>
+                                        </form>
 
-                                </td>
+                                    </td>
 
-                            </tr>
-                            <% } %>
-            </tbody>
-        </table>
+                                </tr>
+                                <% } %>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 

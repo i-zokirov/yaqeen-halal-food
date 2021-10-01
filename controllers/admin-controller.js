@@ -19,7 +19,7 @@ module.exports.delete_product = async(req, res) => {
     const { id } = req.params
     await Product.findByIdAndDelete(id)
     req.flash('success', 'Product has been deleted!')
-    res.redirect('/products')
+    res.redirect('/admin/products')
 }
 
 module.exports.render_product_edit_page = async(req, res) => {
@@ -32,8 +32,8 @@ module.exports.update_product = async(req, res) => {
     const { id } = req.params
     const product = await Product.findByIdAndUpdate(id, {...req.body })
     const updatedProduct = await product.save()
-    req.flash('success', 'Product has been updated!')
-    res.redirect(`/products/${updatedProduct._id}`)
+    req.flash('success', `${updatedProduct.name} has been updated!`)
+    res.redirect(`/admin/products`)
 }
 
 module.exports.render_product_photos_edit_page = async(req, res) => {
@@ -88,7 +88,13 @@ module.exports.create_product = async(req, res) => {
 //order route controllers
 
 module.exports.render_orders = async(req, res) => {
-    const orders = await Order.find({})
+    const { order_status } = req.query
+    let orders
+    if (order_status) {
+        orders = await Order.find({ order_status })
+    } else {
+        orders = await Order.find({})
+    }
     for (let index in orders) {
         await orders[index].populate('order_owner')
     }
