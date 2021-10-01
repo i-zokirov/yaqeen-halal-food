@@ -101,15 +101,19 @@ module.exports.create_product = async(req, res) => {
 module.exports.render_orders = async(req, res) => {
     const { order_status } = req.query
     let orders
+    let title
     if (order_status) {
         orders = await Order.find({ order_status })
+        title = `Orders: ${order_status}`
     } else {
         orders = await Order.find({})
+        title = `Orders: All`
     }
     for (let index in orders) {
         await orders[index].populate('order_owner')
     }
-    res.render('admin/orders', { what: "Admin: Orders", orders })
+    // req.flash('info', 'For better experience, use wide screen resolution!')
+    res.render('admin/orders', { what: title, orders })
 }
 
 module.exports.update_order = async(req, res) => {

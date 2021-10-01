@@ -10,16 +10,20 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="/admin/dashboard">Dashboard</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/admin/products">Products</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/admin/products/onsale">Products On Sale</a>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Customer UI</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/products">Products in Customer UI</a>
+                        <a class="dropdown-item" href="/products/onsale">Products On Sale in Customer UI</a>
+                        <div class="dropdown-divider"></div>
+                    </div>
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin UI</a>
                     <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/admin/products">View Products in Stock</a>
                         <a class="dropdown-item" href="/admin/products/add">Add Product</a>
                         <div class="dropdown-divider"></div>
                         <!-- <a class="dropdown-item" href="#">Estimated Stock Value</a>

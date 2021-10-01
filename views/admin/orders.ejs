@@ -2,27 +2,27 @@
 
     <div class="row">
 
-        <input style="margin-bottom: 5px;" class="form-control" type="text" id="user_input" onkeyup="filterByOrderID()" placeholder="Search by Order ID ...">
+        <input style="margin-bottom: 15px;" class="form-control" type="text" id="user_input" onkeyup="filterByOrderID()" placeholder="Search by Order ID ...">
 
         <div class="row">
-            <ul class="nav justify-content-center">
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/admin/orders">All</a>
+            <ul class="nav nav-pills nav-fill justify-content-center">
+                <li class="nav-item ">
+                    <a class="nav-link <%= what ==  'Orders: All'  ? 'active' : '' %>" aria-current="page" href="/admin/orders">All</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/orders?order_status=New">New</a>
+                    <a class="nav-link <%= what ==  'Orders: New'  ? 'active' : '' %>" href="/admin/orders?order_status=New">New</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/orders?order_status=Packed">Packed</a>
+                    <a class="nav-link <%= what ==  'Orders: Packed'  ? 'active' : '' %>" href="/admin/orders?order_status=Packed">Packed</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/orders?order_status=Delivered">Delivered</a>
+                    <a class="nav-link <%= what ==  'Orders: Delivered'  ? 'active' : '' %>" href="/admin/orders?order_status=Delivered">Delivered</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/orders?order_status=Received">Received</a>
+                    <a class="nav-link <%= what ==  'Orders: Received'  ? 'active' : '' %>" href="/admin/orders?order_status=Received">Received</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/orders?order_status=Cancelled">Cancelled</a>
+                    <a class="nav-link <%= what ==  'Orders: Cancelled'  ? 'active' : '' %>" href="/admin/orders?order_status=Cancelled">Cancelled</a>
                 </li>
             </ul>
         </div>
