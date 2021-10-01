@@ -82,8 +82,9 @@ app.use(methodOverride('_method'))
 
 //routes
 app.get('/', (req, res) => {
-    res.redirect('/products')
+    res.render('home')
 })
+
 
 app.use('/products/', productsRouter)
 app.use('/user', userRouter)
