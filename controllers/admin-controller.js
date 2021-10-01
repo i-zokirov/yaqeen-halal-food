@@ -105,6 +105,10 @@ module.exports.update_order = async(req, res) => {
 
 ///user route controllers
 module.exports.render_users = async(req, res) => {
-    const users = await User.find({})
+    const users = await User.find()
+    for (let user of users) {
+        await user.populate('orders')
+    }
+
     res.render('admin/users', { what: 'Manage users', users })
 }

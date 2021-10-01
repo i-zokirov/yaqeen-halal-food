@@ -17,8 +17,8 @@
                                     <th scope="col" class="border-0 text-uppercase font-medium">Address</th>
                                     <th scope="col" class="border-0 text-uppercase font-medium">Email</th>
                                     <th scope="col" class="border-0 text-uppercase font-medium">Registered</th>
-                                    <th scope="col" class="border-0 text-uppercase font-medium">Category</th>
-                                    <th scope="col" class="border-0 text-uppercase font-medium">Manage</th>
+                                    <!-- <th scope="col" class="border-0 text-uppercase font-medium">Category</th> -->
+                                    <th scope="col" class="border-0 text-uppercase font-medium">Purchase history</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -27,7 +27,10 @@
                                         <% index += 1 %>
                                             <tr>
                                                 <td class="pl-4">
-                                                    <%= index %>
+                                                    <h6 class="font-medium mb-0">
+                                                        <%= index %>
+                                                    </h6>
+
                                                 </td>
                                                 <td>
                                                     <h5 class="font-medium mb-0">
@@ -48,19 +51,19 @@
                                                     <span class="text-muted"><%= user.created_date.getDate()%>.<%= user.created_date.getMonth()%>.<%= user.created_date.getFullYear()%></span><br>
                                                     <span class="text-muted"><%= user.created_date.getHours()%>:<%= user.created_date.getMinutes()%></span>
                                                 </td>
-                                                <td>
+                                                <!-- <td>
                                                     <select class="form-control category-select" id="exampleFormControlSelect1">
                                                         <option>Modulator</option>
                                                         <option>Admin</option>
                                                         <option>User</option>
                                                         <option>Subscriber</option>
                                                     </select>
-                                                </td>
+                                                </td> -->
                                                 <td>
-                                                    <button type="button" class="btn btn-outline-info btn-circle btn-lg btn-circle"><i class="fa fa-key"></i> </button>
-                                                    <button type="button" class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><i class="fa fa-trash"></i> </button>
+                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#user<%= index %>" class="btn btn-outline-warning btn-circle  btn-circle">View</button>
+                                                    <!-- <button type="button" class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><i class="fa fa-trash"></i> </button>
                                                     <button type="button" class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><i class="fa fa-edit"></i> </button>
-                                                    <button type="button" class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><i class="fa fa-upload"></i> </button>
+                                                    <button type="button" class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><i class="fa fa-upload"></i> </button> -->
                                                 </td>
                                             </tr>
                                             <% } %>
@@ -71,3 +74,86 @@
             </div>
         </div>
     </div>
+
+    <% let user_index = 0 %>
+        <% for(let user of users) {%>
+            <% user_index += 1 %>
+                <!-- Modal -->
+                <div class="modal fade" id="user<%= user_index %>" tabindex="-1" aria-labelledby="userLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <% if (user.orders.length) {%>
+                                <div class="modal-header">
+                                    <h6 class="modal-title" id="userLabel">
+                                        <%= user.first_name %>`s purchase history:
+                                    </h6>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <div class="accordion" id="purchaseHistoryPanels">
+                                        <% let accordion_index = 0%>
+                                            <% for (let order of user.orders) {%>
+                                                <%  accordion_index += 1%>
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header" id="heading<%= accordion_index %>">
+                                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= accordion_index %>" aria-expanded="true" aria-controls="collapse<%= accordion_index %>">
+                                                                Purchase Date: <%= order.created_date.getDate()%>.<%= order.created_date.getMonth()%>.<%= order.created_date.getFullYear()%> <%= order.created_date.getHours()%>:<%= order.created_date.getMinutes()%>
+                                                                <br> 
+                                                                Total value: <%= order.total_price%> zl
+                                                            </button>
+                                                        </h2>
+                                                        <div id="collapse<%= accordion_index %>" class="accordion-collapse collapse show" aria-labelledby="heading<%= accordion_index %>" data-bs-parent="#accordionExample">
+                                                            <div class="accordion-body">
+                                                                <span> Ordered Products:
+                                                                    <ul style="list-style: none;">
+                                                                        <% for (let product of order.products) {%>
+                                                                            <li>
+                                                                                <a style="text-decoration: none; text-transform:capitalize" href="">
+                                                                                    <%= product.product_name %>
+                                                                                </a> -
+                                                                                <%= product.quantity%>
+                                                                                    <%= product.product_quantity_type%> - <%= product.product_price %>zl per <%= product.product_quantity_type  %>  
+                                                                            </li>
+                                                                            <% } %>
+                                                                    </ul>
+                                                                </span>
+                                                                <hr>
+
+                                                                <span>
+                                                                    Payment method: <b><%= order.payment_method %>  
+                                                                </span></b>
+                                                                <hr>
+
+                                                                <span>
+                                                                    Payment status: <b><%= order.payment_status %>
+                                                                </span></b>
+                                                                <hr>
+                                                                <span>
+                                                                    Delivery status: <b><%= order.order_status %>
+                                                                </span></b>
+                                                                <hr>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <% } %>
+                                    </div>
+                                </div>
+                                <%} else { %>
+                                    <div class="modal-body">
+                                        <h4>Nothing ordered by
+                                            <% if(user.first_name) {%>
+                                                <%= user.first_name %>
+                                                    <% } else { %>
+                                                        <%= user.username %>
+                                                            <% } %>
+                                        </h4>
+                                    </div>
+                                    <% } %>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                        </div>
+                    </div>
+                </div>
+                <% } %>

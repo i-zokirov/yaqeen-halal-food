@@ -25,25 +25,25 @@ router.route('/products')
     .get(isLoggedIn, isAdmin, catchAsyncErrors(admin_controller.render_products))
 
 router.route('/products/add')
-    .get(admin_controller.render_new_product_template_for_admin)
-    .post(upload.array('product_images'), validateProductData, admin_controller.create_product)
+    .get(isLoggedIn, isAdmin, admin_controller.render_new_product_template_for_admin)
+    .post(isLoggedIn, isAdmin, upload.array('product_images'), validateProductData, admin_controller.create_product)
 
 router.route('/products/:id')
-    .delete(catchAsyncErrors(admin_controller.delete_product))
+    .delete(isLoggedIn, isAdmin, catchAsyncErrors(admin_controller.delete_product))
 
 router.route('/products/:id/edit')
-    .get(catchAsyncErrors(admin_controller.render_product_edit_page))
-    .put(catchAsyncErrors(admin_controller.update_product))
+    .get(isLoggedIn, isAdmin, catchAsyncErrors(admin_controller.render_product_edit_page))
+    .put(isLoggedIn, isAdmin, catchAsyncErrors(admin_controller.update_product))
 
 router.route('/:id/edit/photos')
-    .get(catchAsyncErrors(admin_controller.render_product_photos_edit_page))
-    .post(upload.array('product_images'), catchAsyncErrors(admin_controller.manage_product_photos))
+    .get(isLoggedIn, isAdmin, catchAsyncErrors(admin_controller.render_product_photos_edit_page))
+    .post(isLoggedIn, isAdmin, upload.array('product_images'), catchAsyncErrors(admin_controller.manage_product_photos))
 
 
 
 ///users routes
 
 router.route('/users')
-    .get(catchAsyncErrors(admin_controller.render_users))
+    .get(isLoggedIn, isAdmin, catchAsyncErrors(admin_controller.render_users))
 
 module.exports = router
