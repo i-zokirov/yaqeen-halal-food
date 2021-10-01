@@ -1,16 +1,17 @@
 const Product = require('../model/productModel')
 const Order = require('../model/ordersModel')
+const User = require('../model/userModel')
 const { cloudinary } = require('../cl_config')
 
 //product route controllers
 module.exports.render_products = async(req, res) => {
-    const { category } = (req.body)
+    const { category } = (req.query)
     if (category) {
-
+        const productsByCategory = await Product.find({ category })
+        return res.render('admin/products', { products: productsByCategory, what: category })
     } else {
         const allproducts = await Product.find()
-        console.log(allproducts)
-        res.render('admin/products', { products: allproducts, what: 'All products' })
+        return res.render('admin/products', { products: allproducts, what: 'All products' })
     }
 }
 
@@ -95,10 +96,15 @@ module.exports.render_orders = async(req, res) => {
 }
 
 module.exports.update_order = async(req, res) => {
-    console.log(req.body)
     const { order_id, order_status, payment_status } = req.body
     const order = await Order.findByIdAndUpdate(order_id, { order_status, payment_status })
     await order.save()
     req.flash('success', 'Order has been updated!')
     res.redirect('/admin/orders')
+}
+
+///user route controllers
+module.exports.render_users = async(req, res) => {
+    const users = await User.find({})
+    res.render('admin/users', { what: 'Manage users', users })
 }

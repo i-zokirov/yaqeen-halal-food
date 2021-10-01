@@ -11,7 +11,7 @@
     <script src="https://kit.fontawesome.com/602e6d2296.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/custom.css">
 
-    <title>
+    <title style="text-transform: capitalize;">
         <%=what%>
     </title>
 
@@ -50,6 +50,9 @@
                                                             <script src="/js/orders.js"></script>
 
                                                             <% } %>
+                                                                <% if (what == 'All products') {%>
+                                                                    <script src="/js/products.js"></script>
+                                                                    <% } %>
 </body>
 
 </html>
