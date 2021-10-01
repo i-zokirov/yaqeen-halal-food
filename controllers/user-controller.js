@@ -65,7 +65,7 @@ module.exports.render_user_login_form = (req, res) => {
 
 module.exports.log_user_in = (req, res) => {
     req.flash('success', 'Welcome back!');
-    const redirectURL = req.session.returnTo || '/products';
+    const redirectURL = req.session.returnTo || req.user.isAdmin ? '/admin/dashboard' : '/products'
     delete req.session.returnTo
     res.redirect(redirectURL)
 };

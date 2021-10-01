@@ -1,5 +1,25 @@
 <% layout('layouts/customer-boilerplate')  -%>
     <div class="container">
+        <div class="row" style="margin-bottom: 20px;">
+            <ul class="nav nav-pills nav-fill justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link <%= what ==  'All products'  ? 'active' : '' %>" aria-current="page" href="/products">All</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= what ==  'fruits'  ? 'active' : '' %>" href="/products?category=fruits">Fruits</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= what ==  'vegetables'  ? 'active' : '' %>" href="/products?category=vegetables">Vegetables</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= what ==  'meat'  ? 'active' : '' %>" href="/products?category=meat">Meat</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= what ==  'spices'  ? 'active' : '' %>" href="/products?category=spices">Spices</a>
+                </li>
+
+            </ul>
+        </div>
         <div class="row row-cols-2 row-cols-md-4 g-8">
             <% for(product of products) {%>
                 <div class="col mb-3">

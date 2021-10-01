@@ -47,43 +47,46 @@
                             <%= product.quantity_type %>
                     </li>
                 </ul>
-                <% if (currentUser.isAdmin) {%>
-                    <div class="card-body">
-                        <a href="/admin/products/<%= product._id %>/edit" class="btn btn-primary">Edit</a>
-                        <a href="/admin/products/<%= product._id %>/edit/photos" class="btn btn-info">Manage Photos</a>
-                        <form class="d-inline" method="POST" action="/products/<%= product._id %>?_method=DELETE">
-                            <button class="btn btn-danger">Delete</button>
-                        </form>
-                    </div>
-                    <% } %>
+                <% if (currentUser){%>
+                    <% if (currentUser.isAdmin) {%>
+                        <div class="card-body">
+                            <a href="/admin/products/<%= product._id %>/edit" class="btn btn-primary">Edit</a>
+                            <a href="/admin/products/<%= product._id %>/edit/photos" class="btn btn-info">Manage Photos</a>
+                            <form class="d-inline" method="POST" action="/products/<%= product._id %>?_method=DELETE">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                        <% } %>
+                            <% } %>
 
             </div>
         </div>
+        <% if (currentUser){%>
+            <% if (!currentUser.isAdmin) {%>
+                <div class="col-6 mb-5">
+                    <div class="card">
 
-        <% if (!currentUser.isAdmin) {%>
-            <div class="col-6 mb-5">
-                <div class="card">
+                        <div class="card-body">
+                            <input type="number" id="actual-user-input" value="1" onchange="updateHiddenQuantityValue()">
+                        </div>
 
-                    <div class="card-body">
-                        <input type="number" id="actual-user-input" value="1" onchange="updateHiddenQuantityValue()">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <form method="POST" action="/shopping-cart/add">
+                                    <input type="text" hidden name="productID" value="<%= product._id %>">
+                                    <input type="text" hidden id="hidden-user-input" name="quantity" value="1">
+                                    <input type="text" hidden name="userID" value="<% if (currentUser) {%><%= currentUser._id%><% } %>">
+                                    <button class="btn btn-primary btn-lg">Add to card</button>
+
+                                </form>
+                            </li>
+
+                        </ul>
+
                     </div>
-
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <form method="POST" action="/shopping-cart/add">
-                                <input type="text" hidden name="productID" value="<%= product._id %>">
-                                <input type="text" hidden id="hidden-user-input" name="quantity" value="1">
-                                <input type="text" hidden name="userID" value="<% if (currentUser) {%><%= currentUser._id%><% } %>">
-                                <button class="btn btn-primary btn-lg">Add to card</button>
-
-                            </form>
-                        </li>
-
-                    </ul>
-
                 </div>
-            </div>
-            <% } %>
+                <% } %>
+                    <% } %>
 
     </div>
 
