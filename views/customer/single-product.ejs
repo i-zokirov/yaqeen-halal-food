@@ -61,15 +61,14 @@
 
             </div>
         </div>
-        <% if (currentUser){%>
-            <% if (!currentUser.isAdmin) {%>
-                <div class="col-6 mb-5">
-                    <div class="card">
 
+        <div class="col-6 mb-5">
+            <% if (currentUser){%>
+                <% if (!currentUser.isAdmin) {%>
+                    <div class="card">
                         <div class="card-body">
                             <input type="number" id="actual-user-input" value="1" onchange="updateHiddenQuantityValue()">
                         </div>
-
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
                                 <form method="POST" action="/shopping-cart/add">
@@ -80,13 +79,73 @@
 
                                 </form>
                             </li>
-
                         </ul>
-
                     </div>
-                </div>
-                <% } %>
                     <% } %>
+                        <div style="margin-top: 40px;" class="container">
+                            <h2>Leave a review</h2>
+                            <form action="/products/<%= product._id %>/reviews" method="POST" novalidate class="mb-3 validated-form">
+                                <fieldset class="starability-basic">
+                                    <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+                                    <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                                    <label for="first-rate1" title="Terrible">1 star</label>
+                                    <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                                    <label for="first-rate2" title="Not good">2 stars</label>
+                                    <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                                    <label for="first-rate3" title="Average">3 stars</label>
+                                    <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                                    <label for="first-rate4" title="Very good">4 stars</label>
+                                    <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                                    <label for="first-rate5" title="Amazing">5 stars</label>
+                                </fieldset>
+                                <div class="mb-3">
+                                    <label class="form-label" for="body">Share your experience:</label>
+                                    <textarea name="review[body]" class="form-control" id="body" cols="30" rows="3" required></textarea>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Review is required
+                                    </div>
+                                </div>
+                                <button class="btn btn-success">Submit</button>
+                            </form>
+                        </div>
+                        <% } %>
+
+                            <div class="container">
+                                <% let reviews = product.reviews.reverse() %>
+                                    <% for (let review of reviews) {%>
+                                        <div class="card mb-3">
+                                            <div class="card-body">
+                                                <div class="d-flex">
+                                                    <h6 class="card-title">
+                                                        By: <b><%= review.author.username %></b>
+                                                    </h6>
+                                                    <em style="margin-left: auto;" class="small text-muted">
+                                                <%= review.created_date.getDate()%>.<%= review.created_date.getMonth()%>.<%= review.created_date.getFullYear()%> <%= review.created_date.getHours()%>:<%= review.created_date.getMinutes()%>
+                                                </em>
+                                                </div>
+                                                <p class="starability-result" data-rating="<%= review.rating %>">
+                                                    Rated:
+                                                    <%= review.rating %> stars
+                                                </p>
+                                                <span class="card-text">
+                                                Review:
+                                                <%= review.body %>
+                                            </span>
+                                                <% if (currentUser && review.author.equals(currentUser)) { %>
+                                                    <form action="/products/<%= product._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+                                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                                    </form>
+                                                    <% } %>
+                                            </div>
+                                        </div>
+                                        <% } %>
+                            </div>
+        </div>
+
+
 
     </div>
 

@@ -1,4 +1,4 @@
-const { userSchema, productSchema } = require('./joi-schema')
+const { userSchema, productSchema, reviewSchema } = require('./joi-schema')
 const ExpressError = require('./utils/expressError')
 
 
@@ -35,6 +35,16 @@ module.exports.validateUserData = (req, res, next) => {
 module.exports.validateProductData = (req, res, next) => {
 
     const { error } = productSchema.validate(req.body)
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400)
+    } else {
+        next()
+    }
+}
+
+module.exports.validateReviewData = (req, res, next) => {
+    const { error } = reviewSchema.validate(req.body)
     if (error) {
         const msg = error.details.map(el => el.message).join(',')
         throw new ExpressError(msg, 400)

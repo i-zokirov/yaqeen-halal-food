@@ -20,6 +20,9 @@ module.exports.render_products_onsale = async(req, res) => {
 
 module.exports.render_single_product = async(req, res) => {
     const { id } = req.params
-    const product = await Product.findById(id)
+    const product = await Product.findById(id).populate({
+        path: 'reviews',
+        populate: { path: 'author' }
+    })
     res.render('customer/single-product', { product: product, what: product.name })
 }

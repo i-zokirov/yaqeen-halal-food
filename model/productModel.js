@@ -48,6 +48,10 @@ const productSchema = new Schema({
         type: Array,
         default: ["Available"]
     },
+    reviews: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Review'
+    }],
     created_date: {
         type: Date,
         default: Date.now

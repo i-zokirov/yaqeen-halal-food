@@ -62,3 +62,8 @@ module.exports.productSchema = Joi.object({
     quantity_type: Joi.string().alphanum().trim().min(2).max(40).escapeHTML().required(),
     tags: Joi.array().required()
 })
+
+module.exports.reviewSchema = Joi.object({
+    body: Joi.string().escapeHTML().required(),
+    rating: Joi.number().min(1).required()
+})

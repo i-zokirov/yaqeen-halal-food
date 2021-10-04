@@ -10,7 +10,7 @@ const reviewsSchema = new Schema({
     rating: {
         type: Number,
         required: true,
-        min: 0,
+        min: 1,
         max: 5
     },
     author: {
@@ -21,6 +21,10 @@ const reviewsSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Product',
     },
+    created_date: {
+        type: Date,
+        default: Date.now
+    }
 })
 
 module.exports = mongoose.model('Review', reviewsSchema)
