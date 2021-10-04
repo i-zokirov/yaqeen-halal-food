@@ -5,19 +5,19 @@
         <div class="row">
             <ul class="nav nav-pills nav-fill justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link <%= what ==  'All products'  ? 'active' : '' %>" aria-current="page" href="/admin/products">All</a>
+                    <a class="nav-link <%= what.includes('all')  ? 'active' : '' %>" aria-current="page" href="/admin/products">All</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <%= what ==  'fruits'  ? 'active' : '' %>" href="/admin/products?category=fruits">Fruits</a>
+                    <a class="nav-link <%= what.includes('fruits') ? 'active' : '' %>" href="/admin/products?category=fruits">Fruits</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <%= what ==  'vegetables'  ? 'active' : '' %>" href="/admin/products?category=vegetables">Vegetables</a>
+                    <a class="nav-link <%= what.includes('vegetables') ? 'active' : '' %>" href="/admin/products?category=vegetables">Vegetables</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <%= what ==  'meat'  ? 'active' : '' %>" href="/admin/products?category=meat">Meat</a>
+                    <a class="nav-link <%= what.includes('meat') ? 'active' : '' %>" href="/admin/products?category=meat">Meat</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <%= what ==  'spices'  ? 'active' : '' %>" href="/admin/products?category=spices">Spices</a>
+                    <a class="nav-link <%= what.includes('spices') ? 'active' : '' %>" href="/admin/products?category=spices">Spices</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/products/add">Add new</a>
@@ -33,6 +33,7 @@
                         <th style="width:50%">Product name</th>
                         <th style="width:10%">Price</th>
                         <th style="width:8%">Quantity</th>
+                        <th style="width:14%">Quantity type</th>
                         <th style="width:22%" class="text-center">
                             Category
                         </th>
@@ -45,7 +46,7 @@
                         <tr>
                             <td data-th="Product name">
                                 <div class="row">
-                                    <div class="col-sm-2 hidden-xs display-none-sm-screen"><img src=" " alt="..." class="img-responsive" /></div>
+                                    <div class="col-sm-2 hidden-xs display-none-sm-screen"><img src="<%=product.images[0].tiny_thumbnail %>" alt="..." class="img-responsive" /></div>
                                     <div class="col-sm-10">
                                         <h6 class="nomargin" style="text-transform: capitalize;">
                                             <a href="/products/<%= product._id %>">
@@ -58,18 +59,22 @@
                                     </div>
                                 </div>
                             </td>
-                            <td data-th="Price">
+                            <td>
                                 <%= product.price %> zl</td>
                             <td data-th="Quantity">
                                 <input type="number" onchange="updateHiddenInput('shown<%= product._id %>', 'hidden<%= product._id %>')" id="shown<%= product._id %>" class="form-control text-center" value="<%= product.quantity %>">
+
+                            </td>
+                            <td>
                                 <%= product.quantity_type %>
                             </td>
-                            <td data-th="Subtotal" class="text-center">
+                            <td class="text-center">
                                 <a href="/admin/products?category=<%= product.category %>" style="text-decoration: none;">
                                     <%= product.category %>
                                 </a>
                             </td>
-                            <td class="actions" data-th="Actions">
+
+                            <td class="actions">
                                 <form action="/admin/products/<%= product._id %>/edit?_method=PUT" method="POST">
                                     <input type="number" name="quantity" hidden id="hidden<%= product._id %>" value="<%= product.quantity %>">
                                     <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>

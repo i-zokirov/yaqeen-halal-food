@@ -17,12 +17,15 @@ module.exports.render_admin_dashboard = async(req, res) => {
 //product route controllers
 module.exports.render_products = async(req, res) => {
     const { category } = (req.query)
+    let title;
     if (category) {
         const productsByCategory = await Product.find({ category })
-        return res.render('admin/products', { products: productsByCategory, what: category })
+        title = `Products: ${category}`
+        return res.render('admin/products', { products: productsByCategory, what: title })
     } else {
         const allproducts = await Product.find()
-        return res.render('admin/products', { products: allproducts, what: 'All products' })
+        title = `Products: all`
+        return res.render('admin/products', { products: allproducts, what: title })
     }
 }
 
@@ -101,19 +104,19 @@ module.exports.create_product = async(req, res) => {
 module.exports.render_orders = async(req, res) => {
     const { order_status } = req.query
     let orders
-    let title
+    let orderPageTitle
     if (order_status) {
         orders = await Order.find({ order_status })
-        title = `Orders: ${order_status}`
+        orderPageTitle = `Orders: ${order_status}`
     } else {
         orders = await Order.find({})
-        title = `Orders: All`
+        orderPageTitle = `Orders: All`
     }
     for (let index in orders) {
         await orders[index].populate('order_owner')
     }
     // req.flash('info', 'For better experience, use wide screen resolution!')
-    res.render('admin/orders', { what: title, orders })
+    res.render('admin/orders', { what: orderPageTitle, orders, orderPageTitle })
 }
 
 module.exports.update_order = async(req, res) => {

@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const Order = require('../model/ordersModel')
-const Product = require('../model/productModel')
 const { isLoggedIn, validateProductData, isAdmin } = require('../middleware');
 const catchAsyncErrors = require('../utils/catchAsyncErrors');
 const admin_controller = require('../controllers/admin-controller')
@@ -40,7 +38,7 @@ router.route('/products/:id/edit')
     .get(isLoggedIn, isAdmin, catchAsyncErrors(admin_controller.render_product_edit_page))
     .put(isLoggedIn, isAdmin, catchAsyncErrors(admin_controller.update_product))
 
-router.route('/:id/edit/photos')
+router.route('/products/:id/edit/photos')
     .get(isLoggedIn, isAdmin, catchAsyncErrors(admin_controller.render_product_photos_edit_page))
     .post(isLoggedIn, isAdmin, upload.array('product_images'), catchAsyncErrors(admin_controller.manage_product_photos))
 

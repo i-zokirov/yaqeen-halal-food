@@ -46,11 +46,11 @@
                                                     <script src="/js/shopping-cart.js"></script>
                                                     <% } %>
 
-                                                        <% if (what == "Admin: Orders") {%>
+                                                        <% if (what.includes('Orders')) {%>
                                                             <script src="/js/orders.js"></script>
 
                                                             <% } %>
-                                                                <% if (what == 'All products') {%>
+                                                                <% if (what.includes('Products')) {%>
                                                                     <script src="/js/products.js"></script>
                                                                     <% } %>
                                                                         <% if (what == "Manage users") {%>

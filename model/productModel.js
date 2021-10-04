@@ -9,6 +9,10 @@ const imageSchema = new Schema({
 imageSchema.virtual('thumbnail').get(function() {
     return this.url.replace('/upload', '/upload/w_300')
 })
+imageSchema.virtual('tiny_thumbnail').get(function() {
+    return this.url.replace('/upload', '/upload/w_100,h_100,c_fill')
+
+})
 
 const productSchema = new Schema({
     name: {
