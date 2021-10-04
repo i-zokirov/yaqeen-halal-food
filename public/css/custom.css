@@ -9,3 +9,11 @@
     border-radius: 30px;
     /* margin-left: -50px; */
 }
+
+#sticky-footer {
+    position: relative;
+    left: 0;
+    bottom: 0;
+    margin-bottom: auto;
+    width: 100%;
+}

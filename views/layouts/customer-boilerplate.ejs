@@ -17,7 +17,7 @@
 
 </head>
 
-<body class="vh-100">
+<body class="vh-100 d-flex flex-column">
     <% if (currentUser) {%>
         <% if(currentUser.isAdmin) {%>
             <%- include( '../admin/admin-navbar');%>
@@ -57,6 +57,12 @@
                                                                             <script src="/js/users.js"></script>
 
                                                                             <% } %>
+
+                                                                                <footer class="footer bg-primary py-3 mt-auto">
+                                                                                    <div class="container text-center">
+                                                                                        <small style="color:aliceblue;"> &copy; Yaqeen Halal Food</small>
+                                                                                    </div>
+                                                                                </footer>
 </body>
 
 </html>

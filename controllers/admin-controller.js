@@ -1,6 +1,7 @@
 const Product = require('../model/productModel')
 const Order = require('../model/ordersModel')
 const User = require('../model/userModel')
+const Review = require('../model/reviews')
 const { cloudinary } = require('../cl_config')
 
 
@@ -135,4 +136,11 @@ module.exports.render_users = async(req, res) => {
     }
 
     res.render('admin/users', { what: 'Manage users', users })
+}
+
+//reviews routes
+module.exports.render_reviews = async(req, res) => {
+    const reviews = await Review.find({}).populate('author').populate('rated_product')
+
+    res.render('admin/reviews', { what: "Reviews", reviews })
 }

@@ -49,4 +49,8 @@ router.route('/products/:id/edit/photos')
 router.route('/users')
     .get(isLoggedIn, isAdmin, catchAsyncErrors(admin_controller.render_users))
 
+///Reviews
+router.route('/reviews')
+    .get(isLoggedIn, isAdmin, catchAsyncErrors(admin_controller.render_reviews))
+
 module.exports = router

@@ -1,0 +1,37 @@
+<% layout('layouts/customer-boilerplate')  -%>
+
+
+    <div class="container-sm">
+        <% let reversedReviews = reviews.reverse() %>
+            <% for (let review of reversedReviews) {%>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <h6 class="card-title">
+                                <% if (review.author.first_name && review.author.last_name) {%>
+                                    <%= review.author.first_name %>
+                                        <%= review.author.last_name %>
+                                            <% } else { %>
+                                                <b><%= review.author.username %></b>
+                                                <% } %> has shared a review for
+                                                    <a href="/products/<%= review.rated_product._id %>">
+                                                        <%= review.rated_product.name %>
+                                                    </a>
+                            </h6>
+                            <em style="margin-left: auto;" class="small text-muted">
+                                <%= review.created_date.getDate()%>.<%= review.created_date.getMonth()%>.<%= review.created_date.getFullYear()%> <%= review.created_date.getHours()%>:<%= review.created_date.getMinutes()%>
+                            </em>
+                        </div>
+                        <hr>
+                        <p class="starability-result" data-rating="<%= review.rating %>">
+                            Rated:
+                            <%= review.rating %> stars
+                        </p>
+                        <span class="card-text">
+                            <%= review.body %>
+                        </span>
+
+                    </div>
+                </div>
+                <% } %>
+    </div>
