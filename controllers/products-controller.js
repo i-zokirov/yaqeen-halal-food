@@ -2,6 +2,7 @@ const Product = require('../model/productModel')
 
 //renders products by category or renders products category page
 module.exports.render_products = async(req, res) => {
+    console.log(req.user)
     const { category } = req.query
     if (category) {
         const products = await Product.find({ category })

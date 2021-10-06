@@ -13,6 +13,7 @@ const session = require('express-session')
 const flash = require('connect-flash');
 const app = express()
 const helmet = require("helmet");
+const MongoDBStore = require('connect-mongo');
 
 //routers
 const productsRouter = require('./routes/productRoutes')
@@ -22,9 +23,11 @@ const adminRoutes = require('./routes/adminRoutes')
 
 const PORT = process.env.PORT || 3000
 const User = require('./model/userModel')
+const dbUrl = 'mongodb://localhost:27017/yaqeen-halal-food-db' // process.env.MONGO_DB_ATLAS_URL
+const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
 
 //mongoode connection to MongoDB
-mongoose.connect('mongodb://localhost:27017/yaqeen-halal-food-db', {
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
@@ -45,26 +48,45 @@ app.use(express.static(path.join(__dirname, '/public')))
 //express body parser
 app.use(express.urlencoded({ extended: true }))
 
+//overriding default methods with forms
+app.use(methodOverride('_method'))
+
+//sanitizing user inputs to replace special characters
+app.use(mongoSanitize({ replaceWith: '_', }));
+
+
+//confirguring mongodb to store sessions
+const store = MongoDBStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 3600,
+    crypto: {
+        secret
+    }
+});
+
+store.on("error", function(e) {
+    console.log("SESSION STORE ERROR", e)
+})
+
 //express session
 const sessionConfig = {
-    name: "Yaqeen-halal-food-auth-session",
-    secret: "secret",
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        httpOnly: true,
-        // secure: true,
-        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-        maxAge: 1000 * 60 * 60 * 24 * 7
+        store,
+        name: "Yaqeen-halal-food-auth-session",
+        secret,
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            httpOnly: true,
+            // secure: true,
+            expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+            maxAge: 1000 * 60 * 60 * 24 * 7
+        }
     }
-}
-app.use(session(sessionConfig))
-
-//Flash configuration
-app.use(flash())
-
-//helmet middleware
+    //helmet middleware
 app.use(helmet({ contentSecurityPolicy: false }));
+
+//apply session middleware configuration
+app.use(session(sessionConfig))
 
 //passport middleware and configuration
 app.use(passport.initialize());
@@ -74,8 +96,12 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
+//Flash configuration
+app.use(flash())
+
 //local variables configuration 
 app.use((req, res, next) => {
+
     res.locals.currentUser = req.user
     res.locals.success = req.flash('success')
     res.locals.error = req.flash('error')
@@ -84,11 +110,6 @@ app.use((req, res, next) => {
     next()
 })
 
-//overriding default methods with forms
-app.use(methodOverride('_method'))
-
-//sanitizing user inputs to replace special characters
-app.use(mongoSanitize({ replaceWith: '_', }));
 
 //routes
 app.get('/', (req, res) => {
