@@ -8,9 +8,11 @@ const LocalStrategy = require('passport-local')
 const ExpressError = require('./utils/expressError')
 const methodOverride = require('method-override')
 const express = require('express')
+const mongoSanitize = require('express-mongo-sanitize');
 const session = require('express-session')
 const flash = require('connect-flash');
 const app = express()
+const helmet = require("helmet");
 
 //routers
 const productsRouter = require('./routes/productRoutes')
@@ -45,11 +47,13 @@ app.use(express.urlencoded({ extended: true }))
 
 //express session
 const sessionConfig = {
+    name: "Yaqeen-halal-food-auth-session",
     secret: "secret",
     resave: false,
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
+        // secure: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
@@ -58,6 +62,9 @@ app.use(session(sessionConfig))
 
 //Flash configuration
 app.use(flash())
+
+//helmet middleware
+app.use(helmet({ contentSecurityPolicy: false }));
 
 //passport middleware and configuration
 app.use(passport.initialize());
@@ -79,6 +86,9 @@ app.use((req, res, next) => {
 
 //overriding default methods with forms
 app.use(methodOverride('_method'))
+
+//sanitizing user inputs to replace special characters
+app.use(mongoSanitize({ replaceWith: '_', }));
 
 //routes
 app.get('/', (req, res) => {

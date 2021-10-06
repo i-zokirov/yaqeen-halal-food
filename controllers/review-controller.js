@@ -1,5 +1,4 @@
 const Product = require('../model/productModel')
-const User = require('../model/userModel')
 const Review = require('../model/reviews')
 
 module.exports.create_review = async(req, res) => {
