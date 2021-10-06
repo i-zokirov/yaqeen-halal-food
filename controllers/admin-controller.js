@@ -17,8 +17,13 @@ module.exports.render_admin_dashboard = async(req, res) => {
 
 //product route controllers
 module.exports.render_products = async(req, res) => {
-    const { category } = (req.query)
+    const { category, tags } = (req.query)
     let title;
+    if (tags) {
+        const productsOnSale = await Product.find({ tags: { $all: ['OnSale'] } })
+        title = `Products: ${tags}`
+        return res.render('admin/products', { products: productsOnSale, what: title })
+    }
     if (category) {
         const productsByCategory = await Product.find({ category })
         title = `Products: ${category}`

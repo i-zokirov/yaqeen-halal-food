@@ -20,6 +20,9 @@
                     <a class="nav-link <%= what.includes('spices') ? 'active' : '' %>" href="/admin/products?category=spices">Spices</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link <%= what.includes('OnSale') ? 'active' : '' %>" href="/admin/products?tags=OnSale">On Sale</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/admin/products/add">Add new</a>
                 </li>
             </ul>
@@ -53,9 +56,12 @@
                                                 <%= product.name %>
                                             </a>
                                         </h6>
-                                        <p class="display-none-sm-screen">
+                                        <span class="display-none-sm-screen">
+                                            <% if(product.tags.includes('OnSale')) {%>
+                                                <span class="badge bg-danger">OnSale</span>
+                                        <% } %>
                                             <%= product.description %>
-                                        </p>
+                                                </span>
                                     </div>
                                 </div>
                             </td>

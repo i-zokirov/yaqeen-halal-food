@@ -46,7 +46,8 @@ const productSchema = new Schema({
     images: [imageSchema],
     tags: {
         type: Array,
-        default: ["Available"]
+        default: ["Available"],
+
     },
     reviews: [{
         type: Schema.Types.ObjectId,

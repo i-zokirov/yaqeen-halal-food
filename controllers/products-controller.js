@@ -2,7 +2,6 @@ const Product = require('../model/productModel')
 
 //renders products by category or renders products category page
 module.exports.render_products = async(req, res) => {
-    console.log(req.user)
     const { category } = req.query
     if (category) {
         const products = await Product.find({ category })
@@ -15,7 +14,8 @@ module.exports.render_products = async(req, res) => {
 
 //this controller needs refactoring
 module.exports.render_products_onsale = async(req, res) => {
-    const productsOnSale = await Product.find({ tags: ['OnSale'] })
+    const productsOnSale = await Product.find({ tags: { $all: ['OnSale'] } })
+
     res.render('customer/poroducts-by-category', { products: productsOnSale, what: "Products on Sale" })
 }
 
