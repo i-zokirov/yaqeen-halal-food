@@ -23,7 +23,7 @@ const adminRoutes = require('./routes/adminRoutes')
 
 const PORT = process.env.PORT || 3000
 const User = require('./model/userModel')
-const dbUrl = 'mongodb://localhost:27017/yaqeen-halal-food-db' // process.env.MONGO_DB_ATLAS_URL
+const dbUrl = process.env.MONGO_DB_ATLAS_URL || 'mongodb://localhost:27017/yaqeen-halal-food-db'
 const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
 
 //mongoode connection to MongoDB
