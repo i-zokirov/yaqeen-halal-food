@@ -17,12 +17,12 @@
                         <tr>
                             <td data-th="Product">
                                 <div class="row">
-                                    <div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive" /></div>
+                                    <div class="col-sm-2 hidden-xs display-none-sm-screen"><img src="<%=shopping_cart.products[index].cart_item.images[0].tiny_thumbnail%>" alt="..." class="img-responsive" /></div>
                                     <div class="col-sm-10">
                                         <a href="/products/<%= shopping_cart.products[index].cart_item._id %>">
-                                            <h4 class="nomargin" style="text-transform: capitalize;">
+                                            <h6 class="nomargin" style="text-transform: capitalize;">
                                                 <%= shopping_cart.products[index].cart_item.name %>
-                                            </h4>
+                                            </h6>
                                         </a>
                                     </div>
                                 </div>
@@ -56,6 +56,7 @@
                             <% for (let index in shopping_cart.products) {%>
                                 <%   result += shopping_cart.products[index].cart_item.price * shopping_cart.products[index].item_quantity  %>
                             <% } %> 
+                            <br>
                             <%= result %> zl
                         </span></strong></td>
                         <td>
